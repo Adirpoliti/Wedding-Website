@@ -7,11 +7,9 @@ const router = express.Router();
 router.post('/photo/add', async (req: Request, res: Response, nextfunc: NextFunction) => {
     try {
         console.log(req.files?.photoFile)
-        console.log(req.body)
-        req.body.photoFile = req.files?.photoFile;
-        console.log(req.body)
-        const newPicutre = req.body as PhotoType
-        const response = await addPhoto(newPicutre);
+        const file = req.files?.photoFile;
+        const newPicture: PhotoType = { ...req.body, photoFile: file };
+        const response = await addPhoto(newPicture);
 
         res.status(200).json(response);
     } catch (error) {

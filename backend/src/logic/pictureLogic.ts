@@ -5,7 +5,7 @@ import { PhotoType } from "models/PhotoModel";
 
 export const addPhoto = async (photo: PhotoType): Promise<{ path: string; url: string }> => {
     try {
-        const picture = photo.photoFile
+        const picture = photo.photoFile;
         const path = "Photos";
         const savedFile = await uploadFiles(picture, path);
         if (!savedFile) throw new Error("File upload failed");

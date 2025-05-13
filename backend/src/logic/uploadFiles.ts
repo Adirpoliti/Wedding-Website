@@ -32,7 +32,6 @@ export const uploadFiles = async (file: UploadedFile, path: string) => {
       ContentType: file.mimetype,
       ContentDisposition: "inline",
       CacheControl: "no-cache, no-store, must-revalidate",
-      ACL: "public-read"
     });
 
     await s3.send(command);
