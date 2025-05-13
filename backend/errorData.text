@@ -1,0 +1,45 @@
+{
+  level: 'error',
+  message: "Cannot set properties of undefined (setting 'photo')",
+  timestamp: '2025-05-13 20:34:47'
+}
+{
+  level: 'error',
+  message: "Cannot set properties of undefined (setting 'photo')",
+  timestamp: '2025-05-13 20:35:32'
+}
+{
+  level: 'error',
+  message: "Cannot set properties of undefined (setting 'photo')",
+  timestamp: '2025-05-13 20:35:49'
+}
+{
+  level: 'error',
+  message: 'Failed to save file',
+  timestamp: '2025-05-13 20:39:42'
+}
+{
+  level: 'error',
+  message: 'Failed to save file',
+  timestamp: '2025-05-13 20:52:23'
+}
+{
+  level: 'error',
+  message: 'Failed to save file',
+  timestamp: '2025-05-13 20:52:27'
+}
+{
+  level: 'error',
+  message: 'Failed to save file',
+  timestamp: '2025-05-13 20:53:15'
+}
+{
+  level: 'error',
+  message: 'Failed to save file',
+  timestamp: '2025-05-13 20:53:35'
+}
+{
+  level: 'error',
+  message: "Cannot set properties of undefined (setting 'photoFile')",
+  timestamp: '2025-05-13 20:55:39'
+}
