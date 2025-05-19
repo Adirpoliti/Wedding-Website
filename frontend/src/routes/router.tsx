@@ -1,63 +1,12 @@
-// import { createBrowserRouter, Outlet } from "react-router-dom";
-// import {
-//   PageContainer,
-//   LeftColumn,
-//   RightColumn,
-//   PageContent,
-// } from "../styles/mainPage";
-
-
-// const Layout = () => (
-//   <>
-//     <PageContainer>
-//       <LeftColumn />
-//       <RightColumn />
-//       <PageContent>
-//         <Outlet />
-//       </PageContent>
-//     </PageContainer>
-//   </>
-// );
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Layout />,
-//     children: [
-//       {
-//         path: "home",
-//         element: (
-//             <div>hello guys</div>
-//         ),
-//       },
-//     ],
-//   },
-// ]);
-
-// export default router;
-
-
-
-
-// routes/router.tsx
-
-import { createBrowserRouter } from "react-router-dom";
-import {
-  PageContainer,
-  LeftColumn,
-  RightColumn,
-  PageContent,
-} from "../styles/mainPage";
-import { Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import { HomePage } from "../components/HomePage";
 
 const Layout = () => (
-  <PageContainer>
-    <LeftColumn />
-    <RightColumn />
-    <PageContent>
+  <>
+    <div>
       <Outlet />
-    </PageContent>
-  </PageContainer>
+    </div>
+  </>
 );
 
 const router = createBrowserRouter([
@@ -67,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "home",
-        element: <div>hello guys</div>,
+        element: <HomePage />,
       },
     ],
   },
