@@ -53,7 +53,7 @@ export const getSignedUrlPromise = async (filePath: string): Promise<string> => 
       Key: filePath
     });
 
-    const url = await getSignedUrl(s3, command, { expiresIn: 43200 }); // 12 hours
+    const url = await getSignedUrl(s3, command, { expiresIn: 43200 }); 
     return url;
   } catch (err) {
     loggerData.log("error", `Signed URL Error: ${(err as any).message}`);
