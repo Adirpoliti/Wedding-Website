@@ -10,6 +10,7 @@ export type PhotoUploadInput = {
 
 export type SavedPhoto = {
   _id?: ObjectId;
+  deleteOne(arg0: { pictureId: ObjectId; }): unknown;
   uploaderId: string;
   eventName: string;
   photoUrl: string;

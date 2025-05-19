@@ -1,6 +1,6 @@
 import User from '../models/User';
-import { generateToken } from '../utils/jwt';
 import { Profile } from 'passport-google-oauth20';
+import jwt from 'jsonwebtoken';
 
 export async function findOrCreateGoogleUser(profile: Profile) {
   let user = await User.findOne({ googleId: profile.id });
@@ -11,6 +11,7 @@ export async function findOrCreateGoogleUser(profile: Profile) {
       name: profile.displayName,
       email: profile.emails?.[0].value,
       avatar: profile.photos?.[0].value,
+      role: 'User',
     });
   }
 
@@ -18,5 +19,7 @@ export async function findOrCreateGoogleUser(profile: Profile) {
 }
 
 export function createJwtForUser(userId: string) {
-  return generateToken(userId);
+  return jwt.sign({ userId }, process.env.JWT_SECRET!, {
+    expiresIn: '7d',
+  });
 }

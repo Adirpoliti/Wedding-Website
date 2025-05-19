@@ -34,9 +34,9 @@ mongoose.connect(process.env.MONGO_URI!)
   .catch(err => console.error('MongoDB error:', err));
 
 // ROUTES
-server.use('/api/auth', authRoutes);
+server.use('/auth', authRoutes);
 server.use("/api", uploadPhotoController);
 
-server.use(catchAll);
+// server.use(catchAll);
 
 server.listen(port, () => console.log(`server running on port ${port}`));
