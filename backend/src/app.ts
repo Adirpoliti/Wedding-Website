@@ -9,7 +9,7 @@ import { loggedRequest } from './middleware/log-request';
 import passport from './middleware/passportInit';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth';
-import uploadPhotoController from "./controllers/photoController";
+import PhotoController from "./controllers/photoController";
 import { env } from 'process';
 
 const port = env.port;
@@ -33,9 +33,8 @@ mongoose.connect(process.env.MONGO_URI!)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB error:', err));
 
-// ROUTES
-server.use('/api/auth', authRoutes);
-server.use("/api", uploadPhotoController);
+server.use('/auth', authRoutes);
+server.use("/api", PhotoController);
 
 server.use(catchAll);
 

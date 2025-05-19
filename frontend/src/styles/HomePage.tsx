@@ -14,7 +14,6 @@ export const MainContainer = styled(Box)({
 });
 
 export const MediaContainer = styled(Box)({
-//   padding: "3rem 0",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
