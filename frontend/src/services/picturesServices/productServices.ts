@@ -6,9 +6,9 @@ export const getPictures = async () => {
   return axios.get(apiConfig.apiPicturesPath);
 };
 
-export const getOnePicture = async (id: string) => {
-  return axios.get(apiConfig.apiOnePicturePath + `/${id}`);
-};
+// export const getOnePicture = async (id: string) => {
+//   return axios.get(apiConfig.apiOnePicturePath + `/${id}`);
+// };
 
 export const addPicture = async (picture: PictureType, token: string) => {
   return axios.post(apiConfig.apiNewPicturePath, picture, {

@@ -1,3 +1,34 @@
+// import {
+//   AlbumTitle,
+//   MainContainer,
+//   MediaContainer,
+//   BtnsContainer,
+//   HomeBtns,
+//   CameraIcon,
+//   CollectionIcon,
+// } from "../styles/HomePage";
+
+// export const HomePage = () => {
+//   return (
+//     <>
+//       <MainContainer>
+//         <MediaContainer>
+//           <AlbumTitle>רותם וטל</AlbumTitle>
+//           <BtnsContainer>
+//             <HomeBtns>
+//               <CollectionIcon />
+//             </HomeBtns>
+//             <HomeBtns>
+//               <CameraIcon />
+//             </HomeBtns>
+//           </BtnsContainer>
+//         </MediaContainer>
+//       </MainContainer>
+//     </>
+//   );
+// };
+
+import React, { useRef } from "react";
 import {
   AlbumTitle,
   MainContainer,
@@ -7,25 +38,69 @@ import {
   CameraIcon,
   CollectionIcon,
 } from "../styles/HomePage";
+import { addPicture } from "../services/picturesServices/productServices";
+import { useSelector } from "react-redux"; // אחסון טוקן צריך לשבת על זה לראות מה אנחנו שומרים
 
 export const HomePage = () => {
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
+
+  // const token = useSelector((state: any) => state.auth.token); // לדעתי ככה אנחנו שומרים אבל צריך להסתכל על זה
+
+  const token = "123"
+
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file || !token) return;
+
+    const formData = new FormData();
+    formData.append("photo", file); // לבדוק עם אדיר אם זה נכון ככה לשלוח
+
+    try {
+      await addPicture(formData as any, token);
+      alert("התמונה הועלתה בהצלחה!");
+    } catch (err) {
+      console.error("שגיאה בהעלאה:", err);
+      alert("שגיאה בהעלאת תמונה");
+    }
+  };
+
   return (
-    <>
-      <MainContainer>
-        <MediaContainer>
-          <AlbumTitle>רותם וטל</AlbumTitle>
-          <BtnsContainer>
-            <HomeBtns>
-              <CollectionIcon />
-            </HomeBtns>
-            <HomeBtns>
-              <CameraIcon />
-            </HomeBtns>
-          </BtnsContainer>
-        </MediaContainer>
-      </MainContainer>
-    </>
+    <MainContainer>
+      <MediaContainer>
+        <AlbumTitle>רותם וטל</AlbumTitle>
+
+        {/* זה להעלאה מהמצלמה , צריך לבדוק */}
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+
+        {/* זה להעלאה מהגלריה , צריך לבדוק */}
+        <input
+          ref={galleryInputRef}
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+
+        <BtnsContainer>
+          <HomeBtns onClick={() => galleryInputRef.current?.click()}>
+            <CollectionIcon />
+          </HomeBtns>
+          <HomeBtns onClick={() => cameraInputRef.current?.click()}>
+            <CameraIcon />
+          </HomeBtns>
+        </BtnsContainer>
+      </MediaContainer>
+    </MainContainer>
   );
 };
 
-//
