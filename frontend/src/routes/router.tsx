@@ -1,5 +1,6 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import { HomePage } from "../components/HomePage";
+import { Gallery } from "../components/Gallery";
 
 const Layout = () => (
   <>
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <HomePage />,
+      },
+      {
+        path: "gallery",
+        element: <Gallery />,
       },
     ],
   },
