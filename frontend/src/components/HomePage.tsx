@@ -47,19 +47,18 @@ export const HomePage = () => {
 
   // const token = useSelector((state: any) => state.auth.token); // לדעתי ככה אנחנו שומרים אבל צריך להסתכל על זה
 
-  const token = "123"
-
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files?.[0];
-    if (!file || !token) return;
+    if (!file) return;
 
-    const formData = new FormData();
+    const formData = new FormData();    
     formData.append("photo", file); // לבדוק עם אדיר אם זה נכון ככה לשלוח
-
+    console.log(file);
+    
     try {
-      await addPicture(formData as any, token);
+      await addPicture(formData as any);
       alert("התמונה הועלתה בהצלחה!");
     } catch (err) {
       console.error("שגיאה בהעלאה:", err);

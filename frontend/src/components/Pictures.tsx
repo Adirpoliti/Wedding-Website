@@ -1,22 +1,61 @@
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { useEffect, useState } from "react";
+import { getPictures } from "../services/picturesServices/productServices";
+import type { FetchedPictureType } from "../types/pictureType";
 
 export const Pictures = () => {
+  const [fetchedPics, setFetchedPics] = useState<FetchedPictureType[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const allPics = await getPictures();
+        console.log("allPics", allPics);
+
+        setFetchedPics(allPics);
+      } catch (err) {
+        console.log("fetching error", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <Box sx={{ width: 'auto', height: 'auto', overflowY: "scroll", marginTop: "10rem" }}>
+    <Box
+      sx={{
+        width: "auto",
+        height: "auto",
+        marginTop: "10rem",
+      }}
+    >
       <ImageList variant="masonry" cols={3} gap={8}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+        {fetchedPics.length > 0
+          ? fetchedPics.map((pic) => (
+              <ImageListItem key={pic._id}>
+                <img
+                  style={{ borderRadius: "6px" }}
+                  src={`${pic.photoUrl}`}
+                  alt={pic.fileName}
+                  loading="lazy"
+                />
+              </ImageListItem>
+            ))
+          : <div>no data</div>
+          }
+        {/* {itemData.map((item, index) => (
+          <ImageListItem key={index}>
             <img
-            style={{borderRadius: "6px"}}
+              style={{ borderRadius: "6px" }}
               srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
               src={`${item.img}?w=248&fit=crop&auto=format`}
               alt={item.title}
               loading="lazy"
             />
           </ImageListItem>
-        ))}
+        ))} */}
       </ImageList>
     </Box>
   );
@@ -71,7 +110,7 @@ const itemData = [
     img: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
     title: "Coffee table",
   },
-    {
+  {
     img: "https://images.unsplash.com/photo-1549388604-817d15aa0110",
     title: "Bed",
   },

@@ -1,18 +1,28 @@
 import axios from "axios";
 import { apiConfig } from "../api/apiConfig";
-// import { PictureType } from "../../types/PictureType"; need to add
+import type {
+  FetchedPictureType,
+  UploadPictureType,
+} from "../../types/pictureType";
 
-export const getPictures = async () => {
-  return axios.get(apiConfig.apiPicturesPath);
+export const getPictures = async (): Promise<FetchedPictureType[]> => {
+  return axios
+    .get(apiConfig.apiPicturesPath)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log("Error fetching data:", err);
+    });
 };
 
 // export const getOnePicture = async (id: string) => {
 //   return axios.get(apiConfig.apiOnePicturePath + `/${id}`);
 // };
 
-export const addPicture = async (picture: PictureType, token: string) => {
-  return axios.post(apiConfig.apiNewPicturePath, picture, {
-    headers: { Authentication: `bearer ${token}` },
+export const addPicture = async (formData: FormData) => {
+  return axios.post(apiConfig.apiNewPicturePath, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
 };
 
@@ -21,6 +31,5 @@ export const deletePicture = async (token: string, id: string) => {
     headers: { Authentication: `bearer ${token}` },
   });
 };
-
 
 // all the pathes need to been added with Adir.
