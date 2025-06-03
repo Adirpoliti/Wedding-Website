@@ -20,7 +20,7 @@ server.use(express.json());
 server.use(cors({
   origin: '*',
   methods: '*',
-  allowedHeaders: '*',
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Authentication'],
   credentials: true,
 }));
 
