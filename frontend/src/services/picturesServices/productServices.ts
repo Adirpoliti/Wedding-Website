@@ -2,7 +2,6 @@ import axios from "axios";
 import { apiConfig } from "../api/apiConfig";
 import type {
   FetchedPictureType,
-  UploadPictureType,
 } from "../../types/pictureType";
 
 export const getPictures = async (): Promise<FetchedPictureType[]> => {
@@ -31,5 +30,3 @@ export const deletePicture = async (token: string, id: string) => {
     headers: { Authentication: `bearer ${token}` },
   });
 };
-
-// all the pathes need to been added with Adir.

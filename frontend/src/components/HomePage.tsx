@@ -45,18 +45,12 @@ export const HomePage = () => {
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
-  // const token = useSelector((state: any) => state.auth.token); // לדעתי ככה אנחנו שומרים אבל צריך להסתכל על זה
-
-  const handleFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();    
-    formData.append("photo", file); // לבדוק עם אדיר אם זה נכון ככה לשלוח
-    console.log(file);
-    
+    const formData = new FormData();
+    formData.append("photoFile", file);
     try {
       await addPicture(formData as any);
       alert("התמונה הועלתה בהצלחה!");
@@ -102,4 +96,3 @@ export const HomePage = () => {
     </MainContainer>
   );
 };
-

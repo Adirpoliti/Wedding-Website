@@ -3,9 +3,3 @@ export type FetchedPictureType = {
     photoUrl: string;
     fileName: string;
 }
-
-export type UploadPictureType = {
-    uploaderId: string;
-    eventName: string;
-    photoFile: File;
-}

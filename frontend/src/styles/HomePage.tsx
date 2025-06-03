@@ -31,7 +31,6 @@ export const BtnsContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: "5rem",
-  //   marginTop: "auto"
 });
 
 export const HomeBtns = styled(IconButton)({
