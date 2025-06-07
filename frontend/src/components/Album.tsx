@@ -1,16 +1,21 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
+import type { FetchedPictureType } from "../types/pictureType";
+import {
+  deletePicture,
+  getPictures,
+} from "../services/picturesServices/productServices";
+import { Box, ImageListItem, IconButton, ImageList } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   AlbumMenu,
   AlbumMenuTab,
+  BtnBox,
   CustomTabs,
   GalleryContentBox,
+  ImageListItemWrapper,
 } from "../styles/GalleryStyles";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import { useEffect, useState } from "react";
-import { getPictures } from "../services/picturesServices/productServices";
-import type { FetchedPictureType } from "../types/pictureType";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -29,7 +34,9 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3, color: "#000", flexGrow: 1 }}>{children}</Box>}
+      {value === index && (
+        <Box sx={{ p: 3, color: "#000", flexGrow: 1 }}>{children}</Box>
+      )}
     </div>
   );
 }
@@ -41,7 +48,7 @@ function a11yProps(index: number) {
   };
 }
 
-export const GalleryPlusMenu = () => {
+export const Album = () => {
   const [value, setValue] = React.useState(1);
   const [fetchedPics, setFetchedPics] = useState<FetchedPictureType[]>([]);
 
@@ -49,8 +56,6 @@ export const GalleryPlusMenu = () => {
     const fetchData = async () => {
       try {
         const allPics = await getPictures();
-        console.log("allPics", allPics);
-
         setFetchedPics(allPics);
       } catch (err) {
         console.log("fetching error", err);
@@ -64,6 +69,15 @@ export const GalleryPlusMenu = () => {
     setValue(newValue);
   };
 
+  const handleDelete = async (token: string, picId: string) => {
+    console.log("token:", token, "picid:", picId);
+    try {
+      await deletePicture(token, picId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <GalleryContentBox>
@@ -71,10 +85,11 @@ export const GalleryPlusMenu = () => {
           Item One
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-            <ImageList variant="masonry" cols={3} gap={8}>
-              {fetchedPics.length > 0 ? (
-                fetchedPics.map((pic) => (
-                  <ImageListItem key={pic._id}>
+          <ImageList variant="masonry" cols={3} gap={8}>
+            {fetchedPics.length > 0 ? (
+              fetchedPics.map((pic) => (
+                <ImageListItemWrapper key={pic._id}>
+                  <ImageListItem>
                     <img
                       style={{ borderRadius: "6px" }}
                       src={`${pic.photoUrl}`}
@@ -82,11 +97,26 @@ export const GalleryPlusMenu = () => {
                       loading="lazy"
                     />
                   </ImageListItem>
-                ))
-              ) : (
-                <div>no data</div>
-              )}
-            </ImageList>
+                  <BtnBox className="btn-box">
+                    <IconButton>
+                      <a href={`${pic.photoUrl}`} download={`${pic.fileName}`}>
+                        <DownloadIcon
+                          htmlColor="#fff"
+                          style={{ marginTop: "10px" }}
+                          titleAccess="הורדת תמונה"
+                        />
+                      </a>
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete("123", pic._id)}>
+                      <DeleteIcon htmlColor="#fff" titleAccess="מחיקה" />
+                    </IconButton>
+                  </BtnBox>
+                </ImageListItemWrapper>
+              ))
+            ) : (
+              <div>no data</div>
+            )}
+          </ImageList>
         </CustomTabPanel>
       </GalleryContentBox>
       <AlbumMenu>

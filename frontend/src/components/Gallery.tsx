@@ -4,7 +4,7 @@ import {
   GalleryTitle,
   GalleryTitleBox,
 } from "../styles/GalleryStyles";
-import { GalleryPlusMenu } from "./GalleryPlusMenu";
+import { Album } from "./Album";
 
 export const Gallery = () => {
   return (
@@ -13,7 +13,7 @@ export const Gallery = () => {
         <GalleryTitle>רותם וטל</GalleryTitle>
         <GallerTitleImg src="/assets/images/ringspng.png" alt="rings" />
       </GalleryTitleBox>
-      <GalleryPlusMenu />
+      <Album />
     </GalleryContainer>
   );
 };

@@ -68,3 +68,23 @@ export const CustomTabs = styled(Tabs)<TabsProps>({
     height: 3,
   },
 });
+
+
+export const BtnBox = styled(Box)({
+  opacity: 0,
+  transition: 'opacity 0.3s ease',
+  position: 'absolute',
+  top: 0,
+  right: 5,
+  display: 'flex',
+  pointerEvents: 'none',
+});
+
+
+export const ImageListItemWrapper = styled(Box)({
+   position: 'relative',
+  '&:hover .btn-box': {
+    opacity: 1,
+    pointerEvents: 'auto',
+  },
+})
