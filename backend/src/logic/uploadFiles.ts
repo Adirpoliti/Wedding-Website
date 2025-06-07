@@ -30,7 +30,7 @@ export const uploadFiles = async (file: UploadedFile, path: string) => {
       Key: key,
       Body: file.data,
       ContentType: file.mimetype,
-      ContentDisposition: "inline",
+      ContentDisposition: `attachment; filename="${file.name}"`,
       CacheControl: "no-cache, no-store, must-revalidate",
     });
 

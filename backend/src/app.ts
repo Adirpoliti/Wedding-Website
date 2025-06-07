@@ -18,10 +18,11 @@ const server = express();
 server.use(express.json());
 
 server.use(cors({
-  origin: '*',
+  origin: 'http://localhost:5173',
   methods: '*',
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Authentication'],
   credentials: true,
+  exposedHeaders: ['Content-Disposition']
 }));
 
 server.use(expressFileUpload());
