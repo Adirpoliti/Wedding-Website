@@ -9,7 +9,6 @@ import {
   CollectionIcon,
 } from "../styles/HomePage";
 import { addPicture } from "../services/picturesServices/albumServices";
-import { useSelector } from "react-redux"; // אחסון טוקן צריך לשבת על זה לראות מה אנחנו שומרים
 
 export const HomePage = () => {
   const cameraInputRef = useRef<HTMLInputElement>(null);

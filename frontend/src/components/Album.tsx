@@ -11,7 +11,6 @@ import {
   ImageListItem,
   IconButton,
   ImageList,
-  Checkbox,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -77,6 +76,7 @@ export const Album = () => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    console.log(event);
   };
 
   const handleDelete = async (token: string, picId: string) => {
