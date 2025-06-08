@@ -11,6 +11,7 @@ import mongoose from 'mongoose';
 import authRoutes from './routes/auth';
 import PhotoController from "./controllers/photoController";
 import { env } from 'process';
+import photoRoutes from './routes/photoRoutes';
 
 const port = env.port;
 const server = express();
@@ -36,6 +37,7 @@ mongoose.connect(process.env.MONGO_URI!)
 
 server.use('/auth', authRoutes);
 server.use("/api", PhotoController);
+server.use('/api', photoRoutes);
 
 server.use(catchAll);
 
