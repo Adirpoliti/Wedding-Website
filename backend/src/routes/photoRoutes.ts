@@ -27,8 +27,12 @@ router.post("/photo/download-zip", async (req: express.Request, res: express.Res
     archive.pipe(res);
 
     for (const photo of photos) {
+      if (!photo.photoUrl) {
+        continue;
+      }
+
       const response = await axios.get(photo.photoUrl, { responseType: "stream" });
-      const fileName = photo.fileName || photo.photoUrl.split("/").pop() || "file.jpg";
+      const fileName = photo.fileName ?? photo.photoUrl.split("/").pop() ?? "file.jpg";
       archive.append(response.data, { name: fileName });
     }
 

@@ -1,8 +1,8 @@
 import express from 'express';
 import passport from '../middleware/passportInit';
 import { googleCallback } from '../controllers/authController';
-import { requireAuth } from 'middleware/requiredAuth';
-import { checkAdmin } from 'middleware/checkAdmin';
+import { requireAuth } from '../middleware/requiredAuth';
+import { checkAdmin } from '../middleware/checkAdmin';
 
 const router = express.Router();
 

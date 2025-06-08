@@ -3,17 +3,17 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import { env } from 'process';
 import expressFileUpload from 'express-fileupload';
 import { catchAll } from './middleware/catch-all';
 import { loggedRequest } from './middleware/log-request';
 import passport from './middleware/passportInit';
-import mongoose from 'mongoose';
 import authRoutes from './routes/auth';
 import PhotoController from "./controllers/photoController";
-import { env } from 'process';
 import photoRoutes from './routes/photoRoutes';
 
-const port = env.port;
+const port = process.env.PORT || 3001;
 const server = express();
 
 server.use(express.json());
@@ -41,4 +41,4 @@ server.use('/api', photoRoutes);
 
 server.use(catchAll);
 
-server.listen(port, () => console.log(`server running on port ${port}`));
+server.listen(Number(port), () => { console.log(`server running on port ${port}`) });

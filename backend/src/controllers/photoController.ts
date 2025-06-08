@@ -1,10 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express'
 import { addPhoto, deletePicture, getAllPictures } from '../logic/pictureLogic';
-import { PhotoModel, PhotoUploadInput } from 'models/PhotoModel';
-import { checkAdmin } from 'middleware/checkAdmin';
-import { requireAuth } from 'middleware/requiredAuth';
-import archiver from 'archiver';
-import axios from 'axios';
+import { PhotoUploadInput } from '../models/PhotoModel';
+import { checkAdmin } from '../middleware/checkAdmin';
+import { requireAuth } from '../middleware/requiredAuth';
+
 
 const router = express.Router();
 

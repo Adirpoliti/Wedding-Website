@@ -1,7 +1,7 @@
 import { uploadFiles } from "./uploadFiles";
-import { loggerData } from "utils/logger";
-import { PhotoModel, PhotoUploadInput, SavedPhoto } from "models/PhotoModel";
-import { RequestTimeoutError, ResourceNotFoundError } from "models/ErrorModel";
+import { loggerData } from "../utils/logger";
+import { PhotoModel, PhotoUploadInput, SavedPhoto } from "../models/PhotoModel";
+import { RequestTimeoutError, ResourceNotFoundError } from "../models/ErrorModel";
 
 export const addPhoto = async (photo: PhotoUploadInput) => {
     try {
@@ -29,20 +29,45 @@ export const addPhoto = async (photo: PhotoUploadInput) => {
 
 export const deletePicture = async (_id: string) => {
     try {
-        const findPicture = await PhotoModel.findOne({ _id: _id }) as SavedPhoto
-        if (!findPicture) ResourceNotFoundError(`Failed to find the Product with id: ${_id}!`)
-        const pictureId = findPicture._id;
-        await findPicture.deleteOne({ pictureId })
+        const findPicture = await PhotoModel.findOne({ _id });
+
+        if (!findPicture) {
+            throw ResourceNotFoundError(`Failed to find the picture with id: ${_id}!`);
+        }
+
+        await findPicture.deleteOne();
     } catch (error) {
-        ResourceNotFoundError(`Failed to find the vacation with id: ${_id}!`);
+        throw ResourceNotFoundError(`Failed to delete the picture with id: ${_id}!`);
     }
-}
+};
 
 export const getAllPictures = async () => {
     try {
         const pictures = await PhotoModel.find() as SavedPhoto[];
         return pictures;
     } catch (error) {
-        RequestTimeoutError('Failed to fetch the Products!');
+        RequestTimeoutError('Failed to fetch the picture!');
     }
 }
+
+export const getPhotosByIds = async (photoIds: string[]) => {
+    try {
+        const photos = await PhotoModel.find({ _id: { $in: photoIds } })
+            .select("photoUrl fileName")
+            .lean();
+
+        return photos.map(photo => {
+            const url = photo.photoUrl;
+            const fileName = photo.fileName ?? (url ? url.split("/").pop() : "file.jpg");
+
+            return {
+                url,
+                name: fileName
+            };
+        });
+
+    } catch (error) {
+        loggerData.log('error', `Failed to get photos by IDs: ${error}`);
+        throw new Error("Failed to get photo data for zip download");
+    }
+};

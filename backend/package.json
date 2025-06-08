@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "start": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts"
+        "start": "node dist/app.js",
+        "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
+        "build": "tsc"
     },
     "author": "",
     "license": "ISC",
