@@ -5,6 +5,8 @@ import {
   Tab,
   Tabs,
   type TabsProps,
+  Checkbox,
+  type CheckboxProps,
 } from "@mui/material";
 
 export const GalleryContainer = styled(Box)({
@@ -23,7 +25,7 @@ export const GalleryTitleBox = styled(Box)({
   display: "flex",
   flexDirection: "row-reverse",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 });
 
 export const GalleryTitle = styled(Typography)({
@@ -38,12 +40,12 @@ export const GallerTitleImg = styled("img")({
   width: "7rem",
   height: "7rem",
   marginTop: "2rem",
-})
+});
 
 export const GalleryContentBox = styled(Box)(() => ({
   flexGrow: 1,
   width: "100%",
-  backgroundColor: "#fff"
+  backgroundColor: "#fff",
 }));
 
 export const AlbumMenu = styled(Box)({
@@ -69,22 +71,27 @@ export const CustomTabs = styled(Tabs)<TabsProps>({
   },
 });
 
-
 export const BtnBox = styled(Box)({
   opacity: 0,
-  transition: 'opacity 0.3s ease',
-  position: 'absolute',
+  transition: "opacity 0.3s ease",
+  position: "absolute",
   top: 0,
   right: 5,
-  display: 'flex',
-  pointerEvents: 'none',
+  display: "flex",
+  pointerEvents: "none",
 });
 
+export const CheckBoxBtn = styled(Checkbox)<CheckboxProps>({
+  color: "#fff",
+  "&.Mui-checked": {
+    color: "#fff"
+  }
+})
 
 export const ImageListItemWrapper = styled(Box)({
-   position: 'relative',
-  '&:hover .btn-box': {
+  position: "relative",
+  "&:hover .btn-box": {
     opacity: 1,
-    pointerEvents: 'auto',
+    pointerEvents: "auto",
   },
-})
+});

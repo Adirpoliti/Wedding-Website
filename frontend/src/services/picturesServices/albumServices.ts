@@ -1,8 +1,6 @@
 import axios from "axios";
 import { apiConfig } from "../api/apiConfig";
-import type {
-  FetchedPictureType,
-} from "../../types/pictureType";
+import type { FetchedPictureType } from "../../types/pictureType";
 
 export const getPictures = async (): Promise<FetchedPictureType[]> => {
   return axios
@@ -29,4 +27,8 @@ export const deletePicture = async (token: string, id: string) => {
   return axios.delete(apiConfig.apiDeletePicturePath + `/${id}`, {
     headers: { Authentication: `bearer ${token}` },
   });
+};
+
+export const downloadChecked = async (photoIds: string[]) => {
+  return axios.post(apiConfig.apiDownloadCheckedPath, { photoIds }, { responseType: 'blob' } );
 };

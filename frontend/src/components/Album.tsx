@@ -3,15 +3,23 @@ import { useEffect, useState } from "react";
 import type { FetchedPictureType } from "../types/pictureType";
 import {
   deletePicture,
+  downloadChecked,
   getPictures,
-} from "../services/picturesServices/productServices";
-import { Box, ImageListItem, IconButton, ImageList } from "@mui/material";
+} from "../services/picturesServices/albumServices";
+import {
+  Box,
+  ImageListItem,
+  IconButton,
+  ImageList,
+  Checkbox,
+} from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   AlbumMenu,
   AlbumMenuTab,
   BtnBox,
+  CheckBoxBtn,
   CustomTabs,
   GalleryContentBox,
   ImageListItemWrapper,
@@ -51,6 +59,8 @@ function a11yProps(index: number) {
 export const Album = () => {
   const [value, setValue] = React.useState(1);
   const [fetchedPics, setFetchedPics] = useState<FetchedPictureType[]>([]);
+  const [checkedPics, setCheckedPics] = useState<string[]>([]);
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,9 +88,29 @@ export const Album = () => {
     }
   };
 
+  const handleCheckedPics = (id: string) => {
+    setCheckedPics((prev) => [...prev, id]);
+    console.log(checkedPics);
+  };
+
+const handleDownloadChecked = async () => {
+  const response = await downloadChecked(checkedPics);
+  const url = URL.createObjectURL(response.data);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'WeddingAlbum.zip'; 
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
   return (
     <>
       <GalleryContentBox>
+        <button onClick={handleDownloadChecked}>
+          download checked
+        </button>
+
         <CustomTabPanel value={value} index={0}>
           Item One
         </CustomTabPanel>
@@ -98,6 +128,10 @@ export const Album = () => {
                     />
                   </ImageListItem>
                   <BtnBox className="btn-box">
+                    <CheckBoxBtn
+                      onClick={() => handleCheckedPics(pic._id)}
+                      {...label}
+                    />
                     <IconButton>
                       <a href={`${pic.photoUrl}`} download={`${pic.fileName}`}>
                         <DownloadIcon
@@ -126,8 +160,8 @@ export const Album = () => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <AlbumMenuTab label="אלבום חתונה" {...a11yProps(0)} />
-          <AlbumMenuTab label="תמונות עבר" {...a11yProps(1)} />
+          <AlbumMenuTab label="תמונות עבר" {...a11yProps(0)} />
+          <AlbumMenuTab label="אלבום חתונה" {...a11yProps(1)} />
         </CustomTabs>
       </AlbumMenu>
     </>

@@ -8,7 +8,7 @@ import {
   CameraIcon,
   CollectionIcon,
 } from "../styles/HomePage";
-import { addPicture } from "../services/picturesServices/productServices";
+import { addPicture } from "../services/picturesServices/albumServices";
 import { useSelector } from "react-redux"; // אחסון טוקן צריך לשבת על זה לראות מה אנחנו שומרים
 
 export const HomePage = () => {
