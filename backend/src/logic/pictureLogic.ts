@@ -21,11 +21,12 @@ export const addPhoto = async (photo: PhotoUploadInput) => {
         });
 
         return saved;
-    } catch (err) {
-        loggerData.log('error', `Err: ${err}`);
+    } catch (err: any) {
+        loggerData.log('error', `Err: ${err?.message || err}`);
         throw new Error('Failed to save file');
     }
 };
+
 
 export const deletePicture = async (_id: string) => {
     try {

@@ -1,22 +1,20 @@
 # Use slim Node base image
 FROM node:18-slim
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy only package files first (cache benefit)
+# Copy package files and install deps
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the full project
+# Copy project files including .env
 COPY . .
 
 # Build TypeScript
 RUN npm run build
 
-# Expose the backend port
+# Expose backend port
 EXPOSE 3001
 
 # Run the app

@@ -18,11 +18,28 @@ const server = express();
 
 server.use(express.json());
 
+server.use((req, res, next) => {
+  console.log('🌐 Request Origin:', req.headers.origin);
+  next();
+});
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost',
+  'http://192.168.1.13'
+];
+
 server.use(cors({
-  origin: 'http://localhost:5173',
-  methods: '*',
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Authentication'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
+  methods: '*',
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   exposedHeaders: ['Content-Disposition']
 }));
 

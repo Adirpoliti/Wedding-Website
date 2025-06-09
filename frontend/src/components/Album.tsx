@@ -66,6 +66,7 @@ export const Album = () => {
       try {
         const allPics = await getPictures();
         setFetchedPics(allPics);
+        console.log("📷 fetchedPics:", allPics);
       } catch (err) {
         console.log("fetching error", err);
       }
@@ -115,42 +116,42 @@ const handleDownloadChecked = async () => {
           Item One
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <ImageList variant="masonry" cols={3} gap={8}>
-            {fetchedPics.length > 0 ? (
-              fetchedPics.map((pic) => (
-                <ImageListItemWrapper key={pic._id}>
-                  <ImageListItem>
-                    <img
-                      style={{ borderRadius: "6px" }}
-                      src={`${pic.photoUrl}`}
-                      alt={pic.fileName}
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                  <BtnBox className="btn-box">
-                    <CheckBoxBtn
-                      onClick={() => handleCheckedPics(pic._id)}
-                      {...label}
-                    />
-                    <IconButton>
-                      <a href={`${pic.photoUrl}`} download={`${pic.fileName}`}>
-                        <DownloadIcon
-                          htmlColor="#fff"
-                          style={{ marginTop: "10px" }}
-                          titleAccess="הורדת תמונה"
-                        />
-                      </a>
-                    </IconButton>
-                    <IconButton onClick={() => handleDelete("123", pic._id)}>
-                      <DeleteIcon htmlColor="#fff" titleAccess="מחיקה" />
-                    </IconButton>
-                  </BtnBox>
-                </ImageListItemWrapper>
-              ))
-            ) : (
-              <div>no data</div>
-            )}
-          </ImageList>
+      <ImageList variant="masonry" cols={3} gap={8}>
+  {Array.isArray(fetchedPics) && fetchedPics.length > 0 ? (
+    fetchedPics.map((pic) => (
+      <ImageListItemWrapper key={pic._id}>
+        <ImageListItem>
+          <img
+            style={{ borderRadius: "6px" }}
+            src={pic.photoUrl}
+            alt={pic.fileName}
+            loading="lazy"
+          />
+        </ImageListItem>
+        <BtnBox className="btn-box">
+          <CheckBoxBtn
+            onClick={() => handleCheckedPics(pic._id)}
+            {...label}
+          />
+          <IconButton>
+            <a href={pic.photoUrl} download={pic.fileName}>
+              <DownloadIcon
+                htmlColor="#fff"
+                style={{ marginTop: "10px" }}
+                titleAccess="הורדת תמונה"
+              />
+            </a>
+          </IconButton>
+          <IconButton onClick={() => handleDelete("123", pic._id)}>
+            <DeleteIcon htmlColor="#fff" titleAccess="מחיקה" />
+          </IconButton>
+        </BtnBox>
+      </ImageListItemWrapper>
+    ))
+  ) : (
+    <div>no data</div>
+  )}
+</ImageList>
         </CustomTabPanel>
       </GalleryContentBox>
       <AlbumMenu>
