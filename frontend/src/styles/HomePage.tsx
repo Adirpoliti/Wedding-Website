@@ -1,4 +1,4 @@
-import { Box, IconButton, styled, Typography } from "@mui/material";
+import { Alert, Box, Button, IconButton, styled, Typography } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import CollectionsIcon from "@mui/icons-material/Collections";
 
@@ -23,7 +23,7 @@ export const MediaContainer = styled(Box)({
 
 export const AlbumTitle = styled(Typography)({
   fontFamily: "LiaBerta",
-  fontSize: "7.5rem",
+  fontSize: "clamp(4rem, 25vw, 15rem)",
   color: "#FEF6E3",
 });
 
@@ -39,9 +39,26 @@ export const HomeBtns = styled(IconButton)({
 
 export const CameraIcon = styled(CameraAltIcon)({
   color: "#FEF6E3",
-  fontSize: "4rem",
+  fontSize: "clamp(4rem, 20vw, 6rem)",
 });
 export const CollectionIcon = styled(CollectionsIcon)({
   color: "#FEF6E3",
-  fontSize: "4rem",
+  fontSize: "clamp(4rem, 20vw, 6rem)",
 });
+
+export const CustomAlert = styled(Alert)({
+  position: "fixed",
+  top: "10px",
+  left: 0,
+  right: 0,
+  margin: "0 auto",
+  direction: "rtl",
+  width: "fit-content",
+  fontFamily: "Tahoma",
+});
+
+export const CustomAlertBtn = styled(Button)({
+  marginRight: 30,
+  border: "1px solid white",
+  fontFamily: "Tahoma",
+})

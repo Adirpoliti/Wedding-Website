@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { HomePage } from "../components/HomePage";
 import { Gallery } from "../components/Gallery";
 
@@ -15,6 +15,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
+            {
+        index: true,
+        element: <Navigate to="home" replace />,
+      },
       {
         path: "home",
         element: <HomePage />,

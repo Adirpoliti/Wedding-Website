@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import type { FetchedPictureType } from "../types/pictureType";
 import {
   deletePicture,
-  downloadChecked,
   getPictures,
 } from "../services/picturesServices/albumServices";
 import {
@@ -11,6 +10,7 @@ import {
   ImageListItem,
   IconButton,
   ImageList,
+  CircularProgress,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,6 +23,7 @@ import {
   GalleryContentBox,
   ImageListItemWrapper,
 } from "../styles/GalleryStyles";
+import { BtnsMenu } from "./BtnsMenu";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -55,10 +56,14 @@ function a11yProps(index: number) {
   };
 }
 
-export const Album = () => {
+interface AlbumProps {
+  checkedPics: string[];
+  onCheckboxToggle: (id: string) => void;
+}
+
+export const Album = ({ checkedPics, onCheckboxToggle }: AlbumProps) => {
   const [value, setValue] = React.useState(1);
   const [fetchedPics, setFetchedPics] = useState<FetchedPictureType[]>([]);
-  const [checkedPics, setCheckedPics] = useState<string[]>([]);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   useEffect(() => {
@@ -66,7 +71,6 @@ export const Album = () => {
       try {
         const allPics = await getPictures();
         setFetchedPics(allPics);
-        console.log("📷 fetchedPics:", allPics);
       } catch (err) {
         console.log("fetching error", err);
       }
@@ -89,69 +93,72 @@ export const Album = () => {
     }
   };
 
-  const handleCheckedPics = (id: string) => {
-    setCheckedPics((prev) => [...prev, id]);
-    console.log(checkedPics);
-  };
-
-const handleDownloadChecked = async () => {
-  const response = await downloadChecked(checkedPics);
-  const url = URL.createObjectURL(response.data);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'WeddingAlbum.zip'; 
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
   return (
     <>
       <GalleryContentBox>
-        <button onClick={handleDownloadChecked}>
-          download checked
-        </button>
-
         <CustomTabPanel value={value} index={0}>
           Item One
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-      <ImageList variant="masonry" cols={3} gap={8}>
-  {Array.isArray(fetchedPics) && fetchedPics.length > 0 ? (
-    fetchedPics.map((pic) => (
-      <ImageListItemWrapper key={pic._id}>
-        <ImageListItem>
-          <img
-            style={{ borderRadius: "6px" }}
-            src={pic.photoUrl}
-            alt={pic.fileName}
-            loading="lazy"
-          />
-        </ImageListItem>
-        <BtnBox className="btn-box">
-          <CheckBoxBtn
-            onClick={() => handleCheckedPics(pic._id)}
-            {...label}
-          />
-          <IconButton>
-            <a href={pic.photoUrl} download={pic.fileName}>
-              <DownloadIcon
-                htmlColor="#fff"
-                style={{ marginTop: "10px" }}
-                titleAccess="הורדת תמונה"
-              />
-            </a>
-          </IconButton>
-          <IconButton onClick={() => handleDelete("123", pic._id)}>
-            <DeleteIcon htmlColor="#fff" titleAccess="מחיקה" />
-          </IconButton>
-        </BtnBox>
-      </ImageListItemWrapper>
-    ))
-  ) : (
-    <div>no data</div>
-  )}
-</ImageList>
+          <ImageList
+            variant="masonry"
+            cols={3}
+            gap={8}
+            sx={{
+              display: fetchedPics.length > 0 ? "block" : "flex",
+              justifyContent: "center",
+            }}
+          >
+            {Array.isArray(fetchedPics) && fetchedPics.length > 0 ? (
+              fetchedPics.map((pic) => (
+                <ImageListItemWrapper key={pic._id}>
+                  <ImageListItem>
+                    <img
+                      style={{ borderRadius: "6px" }}
+                      src={pic.photoUrl}
+                      alt={pic.fileName}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                  <BtnBox className="btn-box">
+                    <BtnsMenu
+                      item1={
+                        <CheckBoxBtn
+                          checked={checkedPics.includes(pic._id)}
+                          onClick={() => onCheckboxToggle(pic._id)}
+                          {...label}
+                        />
+                      }
+                      item2={
+                        <IconButton>
+                          <a href={pic.photoUrl} download={pic.fileName}>
+                            <DownloadIcon
+                              htmlColor="#C89999"
+                              style={{ marginTop: "10px" }}
+                              titleAccess="הורדת תמונה"
+                            />
+                          </a>
+                        </IconButton>
+                      }
+                      item3={
+                        <IconButton
+                          onClick={() => handleDelete("123", pic._id)}
+                        >
+                          <DeleteIcon htmlColor="#C89999" titleAccess="מחיקה" />
+                        </IconButton>
+                      }
+                    />
+                  </BtnBox>
+                </ImageListItemWrapper>
+              ))
+            ) : (
+              <li>
+                <Box style={{ display: "inline-block" }}>
+                  <CircularProgress sx={{ color: "#C89999" }} />
+                </Box>
+              </li>
+            )}
+          </ImageList>
         </CustomTabPanel>
       </GalleryContentBox>
       <AlbumMenu>

@@ -1,11 +1,14 @@
 import {
   Box,
-  styled,
-  Typography,
   Tab,
   Tabs,
-  type TabsProps,
+  Menu,
+  Button,
+  styled,
   Checkbox,
+  Typography,
+  ListItemText,
+  type TabsProps,
   type CheckboxProps,
 } from "@mui/material";
 
@@ -30,16 +33,18 @@ export const GalleryTitleBox = styled(Box)({
 
 export const GalleryTitle = styled(Typography)({
   fontFamily: "LiaBerta",
-  fontSize: "5rem",
+  fontSize: "clamp(2rem, 18vw, 10rem)",
   color: "#C89999",
-  paddingTop: "4.3rem",
+  paddingTop: "5.5rem",
+  paddingLeft: "1rem",
   textAlign: "center",
+  overflowY: "hidden",
 });
 
 export const GallerTitleImg = styled("img")({
-  width: "7rem",
-  height: "7rem",
-  marginTop: "2rem",
+  width: "clamp(2rem, 18vw, 10rem)",
+  height: "clamp(2rem, 18vw, 10rem)",
+  marginTop: "4rem",
 });
 
 export const GalleryContentBox = styled(Box)(() => ({
@@ -72,19 +77,31 @@ export const CustomTabs = styled(Tabs)<TabsProps>({
 });
 
 export const BtnBox = styled(Box)({
-  opacity: 0,
+  opacity: 1,
   transition: "opacity 0.3s ease",
   position: "absolute",
   top: 0,
-  right: 5,
+  right: 0,
   display: "flex",
   pointerEvents: "none",
 });
 
+export const CustomMenu = styled(Menu)({
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  "& .MuiMenu-list": {
+  },
+})
+
+export const CustomMenuBtn = styled(Button)({
+  padding: 0,
+  minWidth: 0,
+  cursor: "pointer"
+})
+
 export const CheckBoxBtn = styled(Checkbox)<CheckboxProps>({
-  color: "#fff",
+  color: "#C89999",
   "&.Mui-checked": {
-    color: "#fff"
+    color: "#C89999"
   }
 })
 
@@ -95,3 +112,7 @@ export const ImageListItemWrapper = styled(Box)({
     pointerEvents: "auto",
   },
 });
+
+export const DrawerListItem = styled(ListItemText)({
+  textAlign: "right"
+})
