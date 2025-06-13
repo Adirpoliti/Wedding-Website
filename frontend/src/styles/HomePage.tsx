@@ -27,6 +27,13 @@ export const AlbumTitle = styled(Typography)({
   color: "#FEF6E3",
 });
 
+export const LowerContainer = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "2rem",
+})
+
 export const BtnsContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
@@ -41,10 +48,18 @@ export const CameraIcon = styled(CameraAltIcon)({
   color: "#FEF6E3",
   fontSize: "clamp(4rem, 20vw, 6rem)",
 });
+
 export const CollectionIcon = styled(CollectionsIcon)({
   color: "#FEF6E3",
   fontSize: "clamp(4rem, 20vw, 6rem)",
 });
+
+export const MoveToGallery = styled("a")({
+  textDecoration: "none",
+  color: "#FEF6E3",
+  fontSize: "1.2rem",
+  fontWeight: "bold"
+})
 
 export const CustomAlert = styled(Alert)({
   position: "fixed",

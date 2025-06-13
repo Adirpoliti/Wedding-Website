@@ -1,6 +1,6 @@
 import axios from "axios";
-import { apiConfig } from "../api/apiConfig";
-import type { FetchedPictureType } from "../../types/pictureType";
+import { apiConfig } from "./api/apiConfig";
+import type { FetchedPictureType } from "../types/pictureType";
 
 export const getPictures = async (): Promise<FetchedPictureType[]> => {
   return axios

@@ -9,9 +9,13 @@ import {
   CollectionIcon,
   CustomAlert,
   CustomAlertBtn,
+  LowerContainer,
+  MoveToGallery,
 } from "../styles/HomePage";
-import { addPicture } from "../services/picturesServices/albumServices";
+import { addPicture } from "../services/albumServices";
 import { useNavigate } from "react-router";
+import { Box, Typography } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -69,7 +73,9 @@ export const HomePage = () => {
 
       <MainContainer>
         <MediaContainer>
-          <AlbumTitle>רותם וטל</AlbumTitle>
+          <Box>
+            <AlbumTitle>רותם וטל</AlbumTitle>
+          </Box>
 
           {/* זה להעלאה מהמצלמה , צריך לבדוק */}
           <input
@@ -90,15 +96,22 @@ export const HomePage = () => {
             onChange={handleFileChange}
           />
 
-          <BtnsContainer>
-            <HomeBtns onClick={() => galleryInputRef.current?.click()}>
-              <CollectionIcon />
-            </HomeBtns>
-            <HomeBtns onClick={() => cameraInputRef.current?.click()}>
-              <CameraIcon />
-            </HomeBtns>
-          </BtnsContainer>
+          <LowerContainer>
+            <BtnsContainer>
+              <HomeBtns onClick={() => galleryInputRef.current?.click()}>
+                <CollectionIcon />
+              </HomeBtns>
+              <HomeBtns onClick={() => cameraInputRef.current?.click()}>
+                <CameraIcon />
+              </HomeBtns>
+            </BtnsContainer>
+            <Box style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <ArrowBackIosNewIcon fontSize="small"/>
+              <MoveToGallery href="/gallery">מעבר לגלריה</MoveToGallery>
+            </Box>
+          </LowerContainer>
         </MediaContainer>
+        <Typography>מעבר לגלריה</Typography>
       </MainContainer>
     </>
   );

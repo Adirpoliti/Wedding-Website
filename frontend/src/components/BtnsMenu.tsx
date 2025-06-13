@@ -30,7 +30,7 @@ export const BtnsMenu = ({item1, item2, item3}: BtnsContainerProps) => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <MoreHorizIcon htmlColor='#fff' sx={{  fontSize: "clamp(2rem, 5vw, 3rem)", }}/>
+        <MoreHorizIcon sx={{  color: "#fff", fontSize: "clamp(2rem, 5vw, 3rem)", filter: "drop-shadow(0 0 0.5rem black)", transition: "filter 0.3s ease",}}/>
       </CustomMenuBtn>
       <CustomMenu
         id="basic-menu"

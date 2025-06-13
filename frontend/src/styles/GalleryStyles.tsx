@@ -77,12 +77,12 @@ export const CustomTabs = styled(Tabs)<TabsProps>({
 });
 
 export const BtnBox = styled(Box)({
-  opacity: 1,
-  transition: "opacity 0.3s ease",
   position: "absolute",
   top: 0,
   right: 0,
+  opacity: 0,
   display: "flex",
+  transition: "opacity 0.3s ease",
   pointerEvents: "none",
 });
 

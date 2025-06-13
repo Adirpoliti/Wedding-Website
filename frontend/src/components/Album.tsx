@@ -4,13 +4,15 @@ import type { FetchedPictureType } from "../types/pictureType";
 import {
   deletePicture,
   getPictures,
-} from "../services/picturesServices/albumServices";
+} from "../services/albumServices";
 import {
   Box,
   ImageListItem,
   IconButton,
   ImageList,
   CircularProgress,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -93,6 +95,19 @@ export const Album = ({ checkedPics, onCheckboxToggle }: AlbumProps) => {
     }
   };
 
+  const theme = useTheme();
+
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
+  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
+
+  let columns = 2;
+  if (isXs) columns = 2;
+  else if (isSm) columns = 3;
+  else if (isMd) columns = 4;
+  else if (isLgUp) columns = 6;
+
   return (
     <>
       <GalleryContentBox>
@@ -102,7 +117,7 @@ export const Album = ({ checkedPics, onCheckboxToggle }: AlbumProps) => {
         <CustomTabPanel value={value} index={1}>
           <ImageList
             variant="masonry"
-            cols={3}
+            cols={columns}
             gap={8}
             sx={{
               display: fetchedPics.length > 0 ? "block" : "flex",

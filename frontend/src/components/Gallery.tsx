@@ -10,6 +10,7 @@ import { CustomDrawer } from "./CustomDrawer";
 
 export const Gallery = () => {
   const [checkedPics, setCheckedPics] = useState<string[]>([]);
+  const [albumList, setalbumList] = useState<string[]>([]);
 
   const handleCheckboxToggle = (id: string) => {
     setCheckedPics((prevChecked) => {
@@ -24,7 +25,7 @@ export const Gallery = () => {
   return (
     <GalleryContainer>
       <GalleryTitleBox>
-        <CustomDrawer checkedList={checkedPics} />
+        <CustomDrawer checkedList={checkedPics} albumList={albumList} />
         <GalleryTitle>רותם וטל</GalleryTitle>
         <GallerTitleImg src="/assets/images/ringspng.png" alt="rings" />
       </GalleryTitleBox>
