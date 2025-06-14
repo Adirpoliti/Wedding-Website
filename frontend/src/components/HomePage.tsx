@@ -106,12 +106,11 @@ export const HomePage = () => {
               </HomeBtns>
             </BtnsContainer>
             <Box style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <ArrowBackIosNewIcon fontSize="small"/>
+              <ArrowBackIosNewIcon fontSize="small" />
               <MoveToGallery href="/gallery">מעבר לגלריה</MoveToGallery>
             </Box>
           </LowerContainer>
         </MediaContainer>
-        <Typography>מעבר לגלריה</Typography>
       </MainContainer>
     </>
   );

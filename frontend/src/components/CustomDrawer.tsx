@@ -12,16 +12,22 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DownloadIcon from "@mui/icons-material/Download";
 import DownloadingIcon from "@mui/icons-material/Downloading";
-import { DrawerListItem } from "../styles/GalleryStyles";
+import {
+  CustomDrawerMainContainer,
+  DrawerListItem,
+} from "../styles/GalleryStyles";
 import { IconButton } from "@mui/material";
-import { downloadChecked } from "../services/albumServices";
 import { useNavigate } from "react-router";
 
 interface CustomDrawerProps {
-  checkedList: string[];
-  albumList: string[];
+  onDownloadChecked: () => void;
+  onSelectAllAndDownload: () => void;
 }
-export const CustomDrawer = ({ checkedList, albumList }: CustomDrawerProps) => {
+
+export const CustomDrawer = ({
+  onDownloadChecked,
+  onSelectAllAndDownload,
+}: CustomDrawerProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
@@ -30,19 +36,8 @@ export const CustomDrawer = ({ checkedList, albumList }: CustomDrawerProps) => {
     setOpen(newOpen);
   };
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     window.location.href = "http://localhost:3001/auth/google";
-  };
-
-  const handleDownloadChecked = async (checkedList: string[]) => {
-    const response = await downloadChecked(checkedList);
-    const url = URL.createObjectURL(response.data);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "WeddingAlbum.zip";
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   const DrawerList = (
@@ -56,45 +51,42 @@ export const CustomDrawer = ({ checkedList, albumList }: CustomDrawerProps) => {
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate("/home")}>
             <ListItemIcon>
-              <HomeIcon />
+              <HomeIcon htmlColor="#C89999" />
             </ListItemIcon>
             <DrawerListItem primary={"דף הבית"} />
           </ListItemButton>
         </ListItem>
+
         {!isLogin && (
           <>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={onDownloadChecked}>
                 <ListItemIcon>
-                  <DownloadingIcon />
+                  <DownloadingIcon htmlColor="#C89999" />
                 </ListItemIcon>
-                <DrawerListItem
-                  onClick={() => handleDownloadChecked(checkedList)}
-                  primary={"הורדת בחירות"}
-                />
+                <DrawerListItem primary={"הורדת בחירות"} />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={onSelectAllAndDownload}>
                 <ListItemIcon>
-                  <DownloadIcon />
+                  <DownloadIcon htmlColor="#C89999" />
                 </ListItemIcon>
-                <DrawerListItem
-                  onClick={() => handleDownloadChecked(albumList)}
-                  primary={"הורדת אלבום"}
-                />
+                <DrawerListItem primary={"הורדת הכל"} />
               </ListItemButton>
             </ListItem>
           </>
         )}
       </List>
+
       <Divider />
+
       <List>
         {isLogin ? (
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <LogoutIcon />
+                <LogoutIcon htmlColor="#C89999" />
               </ListItemIcon>
               <DrawerListItem primary={"יציאה"} />
             </ListItemButton>
@@ -103,7 +95,7 @@ export const CustomDrawer = ({ checkedList, albumList }: CustomDrawerProps) => {
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogin}>
               <ListItemIcon>
-                <LoginIcon />
+                <LoginIcon htmlColor="#C89999" />
               </ListItemIcon>
               <DrawerListItem primary={"התחברות"} />
             </ListItemButton>
@@ -114,13 +106,13 @@ export const CustomDrawer = ({ checkedList, albumList }: CustomDrawerProps) => {
   );
 
   return (
-    <div style={{ position: "absolute", top: 0, right: 0 }}>
-      <IconButton onClick={toggleDrawer(true)}>
-        <MenuIcon htmlColor="#C89999" fontSize="large" />
+    <CustomDrawerMainContainer>
+      <IconButton onClick={toggleDrawer(true)} sx={{ color: "#C89999" }}>
+        <MenuIcon />
       </IconButton>
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
-    </div>
+    </CustomDrawerMainContainer>
   );
 };

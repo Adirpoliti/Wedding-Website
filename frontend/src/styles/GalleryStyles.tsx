@@ -17,6 +17,7 @@ export const GalleryContainer = styled(Box)({
   flexDirection: "column",
   height: "100vh",
   backgroundColor: "#fff",
+  overflowY: "auto"
 });
 
 export const GalleryTitleBox = styled(Box)({
@@ -115,4 +116,10 @@ export const ImageListItemWrapper = styled(Box)({
 
 export const DrawerListItem = styled(ListItemText)({
   textAlign: "right"
+})
+
+export const CustomDrawerMainContainer = styled(Box)({
+  position: "absolute",
+  top: 0,
+  right: 0
 })

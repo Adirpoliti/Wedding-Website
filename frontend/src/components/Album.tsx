@@ -1,10 +1,7 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { FetchedPictureType } from "../types/pictureType";
-import {
-  deletePicture,
-  getPictures,
-} from "../services/albumServices";
+import { deletePicture } from "../services/albumServices";
 import {
   Box,
   ImageListItem,
@@ -61,25 +58,16 @@ function a11yProps(index: number) {
 interface AlbumProps {
   checkedPics: string[];
   onCheckboxToggle: (id: string) => void;
+  pictures: FetchedPictureType[];
 }
 
-export const Album = ({ checkedPics, onCheckboxToggle }: AlbumProps) => {
-  const [value, setValue] = React.useState(1);
-  const [fetchedPics, setFetchedPics] = useState<FetchedPictureType[]>([]);
+export const Album = ({
+  checkedPics,
+  onCheckboxToggle,
+  pictures,
+}: AlbumProps) => {
+  const [value, setValue] = useState(1);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const allPics = await getPictures();
-        setFetchedPics(allPics);
-      } catch (err) {
-        console.log("fetching error", err);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -112,7 +100,9 @@ export const Album = ({ checkedPics, onCheckboxToggle }: AlbumProps) => {
     <>
       <GalleryContentBox>
         <CustomTabPanel value={value} index={0}>
-          Item One
+          <Box style={{ margin: "0 auto", width: "fit-content" }}>
+            <CircularProgress sx={{ color: "#C89999" }} />
+          </Box>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <ImageList
@@ -120,12 +110,12 @@ export const Album = ({ checkedPics, onCheckboxToggle }: AlbumProps) => {
             cols={columns}
             gap={8}
             sx={{
-              display: fetchedPics.length > 0 ? "block" : "flex",
+              display: pictures.length > 0 ? "block" : "flex",
               justifyContent: "center",
             }}
           >
-            {Array.isArray(fetchedPics) && fetchedPics.length > 0 ? (
-              fetchedPics.map((pic) => (
+            {Array.isArray(pictures) && pictures.length > 0 ? (
+              pictures.map((pic) => (
                 <ImageListItemWrapper key={pic._id}>
                   <ImageListItem>
                     <img

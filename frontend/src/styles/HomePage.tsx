@@ -5,6 +5,7 @@ import CollectionsIcon from "@mui/icons-material/Collections";
 export const MainContainer = styled(Box)({
   margin: 0,
   padding: 0,
+  boxSizing: "border-box",
   backgroundImage: "url('assets/images/pic.jpg')",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
@@ -25,6 +26,8 @@ export const AlbumTitle = styled(Typography)({
   fontFamily: "LiaBerta",
   fontSize: "clamp(4rem, 25vw, 15rem)",
   color: "#FEF6E3",
+  position: "relative",
+  top: "2rem"
 });
 
 export const LowerContainer = styled(Box)({
