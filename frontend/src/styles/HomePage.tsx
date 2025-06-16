@@ -1,4 +1,11 @@
-import { Alert, Box, Button, IconButton, styled, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  IconButton,
+  styled,
+  Typography,
+} from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import CollectionsIcon from "@mui/icons-material/Collections";
 
@@ -27,7 +34,7 @@ export const AlbumTitle = styled(Typography)({
   fontSize: "clamp(4rem, 25vw, 15rem)",
   color: "#FEF6E3",
   position: "relative",
-  top: "2rem"
+  top: "2rem",
 });
 
 export const LowerContainer = styled(Box)({
@@ -35,7 +42,7 @@ export const LowerContainer = styled(Box)({
   flexDirection: "column",
   alignItems: "center",
   gap: "2rem",
-})
+});
 
 export const BtnsContainer = styled(Box)({
   display: "flex",
@@ -57,13 +64,6 @@ export const CollectionIcon = styled(CollectionsIcon)({
   fontSize: "clamp(4rem, 20vw, 6rem)",
 });
 
-export const MoveToGallery = styled("a")({
-  textDecoration: "none",
-  color: "#FEF6E3",
-  fontSize: "1.2rem",
-  fontWeight: "bold"
-})
-
 export const CustomAlert = styled(Alert)({
   position: "fixed",
   top: "10px",
@@ -79,4 +79,4 @@ export const CustomAlertBtn = styled(Button)({
   marginRight: 30,
   border: "1px solid white",
   fontFamily: "Tahoma",
-})
+});

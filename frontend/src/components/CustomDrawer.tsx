@@ -12,16 +12,17 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DownloadIcon from "@mui/icons-material/Download";
 import DownloadingIcon from "@mui/icons-material/Downloading";
+import CollectionsIcon from "@mui/icons-material/Collections";
 import {
   CustomDrawerMainContainer,
   DrawerListItem,
 } from "../styles/GalleryStyles";
 import { IconButton } from "@mui/material";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 interface CustomDrawerProps {
-  onDownloadChecked: () => void;
-  onSelectAllAndDownload: () => void;
+  onDownloadChecked?: () => void;
+  onSelectAllAndDownload?: () => void;
 }
 
 export const CustomDrawer = ({
@@ -31,6 +32,8 @@ export const CustomDrawer = ({
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/home";
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -39,6 +42,7 @@ export const CustomDrawer = ({
   const handleLogin = () => {
     window.location.href = "http://localhost:3001/auth/google";
   };
+
 
   const DrawerList = (
     <Box
@@ -49,15 +53,19 @@ export const CustomDrawer = ({
     >
       <List>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate("/home")}>
+          <ListItemButton onClick={() => navigate(isHome ? "/gallery" :"/home")}>
             <ListItemIcon>
-              <HomeIcon htmlColor="#C89999" />
+              {isHome ? (
+                <CollectionsIcon htmlColor="#000" />
+              ) : (
+                <HomeIcon htmlColor="#C89999" />
+              )}
             </ListItemIcon>
-            <DrawerListItem primary={"דף הבית"} />
+            <DrawerListItem primary={isHome ? "גלריה" : "דף הבית"} />
           </ListItemButton>
         </ListItem>
 
-        {!isLogin && (
+        {!isLogin && !isHome &&(
           <>
             <ListItem disablePadding>
               <ListItemButton onClick={onDownloadChecked}>
@@ -70,7 +78,7 @@ export const CustomDrawer = ({
             <ListItem disablePadding>
               <ListItemButton onClick={onSelectAllAndDownload}>
                 <ListItemIcon>
-                  <DownloadIcon htmlColor="#C89999" />
+                  <DownloadIcon htmlColor={"#C89999"} />
                 </ListItemIcon>
                 <DrawerListItem primary={"הורדת הכל"} />
               </ListItemButton>
@@ -86,7 +94,7 @@ export const CustomDrawer = ({
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <LogoutIcon htmlColor="#C89999" />
+                <LogoutIcon htmlColor={isHome ? "#000" : "#C89999"} />
               </ListItemIcon>
               <DrawerListItem primary={"יציאה"} />
             </ListItemButton>
@@ -95,7 +103,7 @@ export const CustomDrawer = ({
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogin}>
               <ListItemIcon>
-                <LoginIcon htmlColor="#C89999" />
+                <LoginIcon htmlColor={isHome ? "#000" : "#C89999"} />
               </ListItemIcon>
               <DrawerListItem primary={"התחברות"} />
             </ListItemButton>
@@ -107,7 +115,10 @@ export const CustomDrawer = ({
 
   return (
     <CustomDrawerMainContainer>
-      <IconButton onClick={toggleDrawer(true)} sx={{ color: "#C89999" }}>
+      <IconButton
+        onClick={toggleDrawer(true)}
+        sx={{ color: isHome ? "#FEF6E3" : "#C89999" }}
+      >
         <MenuIcon />
       </IconButton>
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>

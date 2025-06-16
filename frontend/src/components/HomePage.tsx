@@ -10,12 +10,11 @@ import {
   CustomAlert,
   CustomAlertBtn,
   LowerContainer,
-  MoveToGallery,
 } from "../styles/HomePage";
 import { addPicture } from "../services/albumServices";
 import { useNavigate } from "react-router";
-import { Box, Typography } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { Box } from "@mui/material";
+import { CustomDrawer } from "./CustomDrawer";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -72,6 +71,7 @@ export const HomePage = () => {
       )}
 
       <MainContainer>
+        <CustomDrawer />
         <MediaContainer>
           <Box>
             <AlbumTitle>רותם וטל</AlbumTitle>
@@ -105,10 +105,10 @@ export const HomePage = () => {
                 <CameraIcon />
               </HomeBtns>
             </BtnsContainer>
-            <Box style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            {/* <Box style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <ArrowBackIosNewIcon fontSize="small" />
               <MoveToGallery href="/gallery">מעבר לגלריה</MoveToGallery>
-            </Box>
+            </Box> */}
           </LowerContainer>
         </MediaContainer>
       </MainContainer>
