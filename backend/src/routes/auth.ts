@@ -1,21 +1,34 @@
-import express from 'express';
-import passport from '../middleware/passportInit';
-import { googleCallback } from '../controllers/authController';
-import { requireAuth } from '../middleware/requiredAuth';
-import { checkAdmin } from '../middleware/checkAdmin';
+import express from "express";
+import passport from "../middleware/passportInit";
+import { requireAuth } from "../middleware/requiredAuth";
+import { checkAdmin } from "../middleware/checkAdmin";
+import { createJwtForUser } from "../logic/authLogic";
 
 const router = express.Router();
 
-router.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email'],
-}));
-
-router.get('/google/callback',
-  passport.authenticate('google', { session: false }),
-  googleCallback
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
 );
 
-router.get('/me', requireAuth, (req, res) => {
+router.get("/google/callback", (req, res, next) => {
+  passport.authenticate("google", { session: false }, (err, user, info) => {
+    if (err || !user || typeof user !== "object" || !("id" in user)) {
+      return res.redirect("http://localhost:5173/?login=failed");
+    }
+
+    console.log("Authenticated user:", user);
+    
+    const token = createJwtForUser(user.id as string);
+    const redirectUrl = `http://localhost:5173/gallery?token=${token}`;
+    res.redirect(redirectUrl);
+  })(req, res, next);
+});
+
+
+router.get("/me", requireAuth, (req, res) => {
   const user = (req as any).user;
 
   res.json({
@@ -27,8 +40,8 @@ router.get('/me', requireAuth, (req, res) => {
   });
 });
 
-router.get('/admin/secret', requireAuth, checkAdmin, (req, res) => {
-  res.json({ message: 'You are an admin!', user: (req as any).user });
+router.get("/admin/secret", requireAuth, checkAdmin, (req, res) => {
+  res.json({ message: "You are an admin!", user: (req as any).user });
 });
 
 export default router;
