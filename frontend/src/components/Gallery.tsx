@@ -10,9 +10,41 @@ import { CustomDrawer } from "./CustomDrawer";
 import { getPictures, downloadChecked } from "../services/albumServices";
 import type { FetchedPictureType } from "../types/pictureType";
 
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
+import { loginSuccess } from "../features/user/userSlice";
+
 export const Gallery = () => {
   const [checkedPics, setCheckedPics] = useState<string[]>([]);
   const [allPics, setAllPics] = useState<FetchedPictureType[]>([]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token");
+
+    if (token) {
+      fetch("http://localhost:3001/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((user) => {
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+          dispatch(loginSuccess({ token, user }));
+          navigate("/gallery", { replace: true });
+        })
+        .catch((err) => {
+          console.error("Login failed", err);
+        });
+    }
+  }, [location.search, dispatch, navigate]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,13 +59,11 @@ export const Gallery = () => {
   }, []);
 
   const handleCheckboxToggle = (id: string) => {
-    setCheckedPics((prevChecked) => {
-      if (prevChecked.includes(id)) {
-        return prevChecked.filter((picId) => picId !== id);
-      } else {
-        return [...prevChecked, id];
-      }
-    });
+    setCheckedPics((prevChecked) =>
+      prevChecked.includes(id)
+        ? prevChecked.filter((picId) => picId !== id)
+        : [...prevChecked, id]
+    );
   };
 
   const handleDownloadChecked = async (ids: string[]) => {

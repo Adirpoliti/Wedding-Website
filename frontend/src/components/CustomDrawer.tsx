@@ -19,6 +19,8 @@ import {
 } from "../styles/GalleryStyles";
 import { IconButton } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { loginSuccess, logout } from "../features/user/userSlice";
 
 interface CustomDrawerProps {
   onDownloadChecked?: () => void;
@@ -31,18 +33,26 @@ export const CustomDrawer = ({
 }: CustomDrawerProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
-  const [isLogin, setIsLogin] = React.useState(false);
+  // const [isLogin, setIsLogin] = React.useState(false);
+  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const isHome = location.pathname === "/home";
+
+    const handleLogin = () => {
+  window.location.href = "http://localhost:3001/auth/google";
+};
+
+const handleLogout = () => {
+  dispatch(logout());
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  navigate("/home");
+};
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
-
-  const handleLogin = () => {
-    window.location.href = "http://localhost:3001/auth/google";
-  };
-
 
   const DrawerList = (
     <Box
@@ -65,7 +75,7 @@ export const CustomDrawer = ({
           </ListItemButton>
         </ListItem>
 
-        {!isLogin && !isHome &&(
+        {!isAuthenticated && !isHome &&(
           <>
             <ListItem disablePadding>
               <ListItemButton onClick={onDownloadChecked}>
@@ -90,9 +100,9 @@ export const CustomDrawer = ({
       <Divider />
 
       <List>
-        {isLogin ? (
+        {isAuthenticated ? (
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutIcon htmlColor={isHome ? "#000" : "#C89999"} />
               </ListItemIcon>
@@ -102,6 +112,7 @@ export const CustomDrawer = ({
         ) : (
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogin}>
+            {console.log(isAuthenticated)}
               <ListItemIcon>
                 <LoginIcon htmlColor={isHome ? "#000" : "#C89999"} />
               </ListItemIcon>
