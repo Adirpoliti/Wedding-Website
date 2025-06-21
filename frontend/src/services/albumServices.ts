@@ -25,7 +25,7 @@ export const addPicture = async (formData: FormData) => {
 
 export const deletePicture = async (token: string, id: string) => {
   return axios.delete(apiConfig.apiDeletePicturePath + `/${id}`, {
-    headers: { Authentication: `bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` },
   });
 };
 

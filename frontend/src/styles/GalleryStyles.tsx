@@ -17,7 +17,7 @@ export const GalleryContainer = styled(Box)({
   flexDirection: "column",
   height: "100vh",
   backgroundColor: "#fff",
-  overflowY: "auto"
+  overflowY: "auto",
 });
 
 export const GalleryTitleBox = styled(Box)({
@@ -89,22 +89,21 @@ export const BtnBox = styled(Box)({
 
 export const CustomMenu = styled(Menu)({
   backgroundColor: "rgba(0, 0, 0, 0.5)",
-  "& .MuiMenu-list": {
-  },
-})
+  "& .MuiMenu-list": {},
+});
 
 export const CustomMenuBtn = styled(Button)({
   padding: 0,
   minWidth: 0,
-  cursor: "pointer"
-})
+  cursor: "pointer",
+});
 
 export const CheckBoxBtn = styled(Checkbox)<CheckboxProps>({
   color: "#C89999",
   "&.Mui-checked": {
-    color: "#C89999"
-  }
-})
+    color: "#C89999",
+  },
+});
 
 export const ImageListItemWrapper = styled(Box)({
   position: "relative",
@@ -115,11 +114,11 @@ export const ImageListItemWrapper = styled(Box)({
 });
 
 export const DrawerListItem = styled(ListItemText)({
-  textAlign: "right"
-})
+  textAlign: "right",
+});
 
 export const CustomDrawerMainContainer = styled(Box)({
   position: "absolute",
   top: 0,
-  right: 0
-})
+  right: 0,
+});

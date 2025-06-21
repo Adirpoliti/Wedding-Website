@@ -20,7 +20,7 @@ import {
 import { IconButton } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { loginSuccess, logout } from "../features/user/userSlice";
+import { logout } from "../features/user/userSlice";
 
 interface CustomDrawerProps {
   onDownloadChecked?: () => void;
@@ -39,16 +39,16 @@ export const CustomDrawer = ({
   const location = useLocation();
   const isHome = location.pathname === "/home";
 
-    const handleLogin = () => {
-  window.location.href = "http://localhost:3001/auth/google";
-};
+  const handleLogin = () => {
+    window.location.href = "http://localhost:3001/auth/google";
+  };
 
-const handleLogout = () => {
-  dispatch(logout());
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  navigate("/home");
-};
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/home");
+  };
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -63,7 +63,9 @@ const handleLogout = () => {
     >
       <List>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate(isHome ? "/gallery" :"/home")}>
+          <ListItemButton
+            onClick={() => navigate(isHome ? "/gallery" : "/home")}
+          >
             <ListItemIcon>
               {isHome ? (
                 <CollectionsIcon htmlColor="#000" />
@@ -75,7 +77,7 @@ const handleLogout = () => {
           </ListItemButton>
         </ListItem>
 
-        {!isAuthenticated && !isHome &&(
+        {isAuthenticated && !isHome && (
           <>
             <ListItem disablePadding>
               <ListItemButton onClick={onDownloadChecked}>
@@ -112,7 +114,6 @@ const handleLogout = () => {
         ) : (
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogin}>
-            {console.log(isAuthenticated)}
               <ListItemIcon>
                 <LoginIcon htmlColor={isHome ? "#000" : "#C89999"} />
               </ListItemIcon>

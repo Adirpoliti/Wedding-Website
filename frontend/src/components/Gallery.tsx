@@ -45,7 +45,6 @@ export const Gallery = () => {
     }
   }, [location.search, dispatch, navigate]);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,6 +56,10 @@ export const Gallery = () => {
     };
     fetchData();
   }, []);
+
+  const handleDeletePicture = (picId: string) => {
+    setAllPics((prev) => prev.filter((pic) => pic._id !== picId));
+  };
 
   const handleCheckboxToggle = (id: string) => {
     setCheckedPics((prevChecked) =>
@@ -97,8 +100,9 @@ export const Gallery = () => {
       </GalleryTitleBox>
       <Album
         checkedPics={checkedPics}
-        onCheckboxToggle={handleCheckboxToggle}
         pictures={allPics}
+        onCheckboxToggle={handleCheckboxToggle}
+        onDeletePicture={handleDeletePicture}
       />
     </GalleryContainer>
   );
