@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
+import type { UserType } from "../../types/userType";
 
-const initialState = {
+interface userState {
+  token: string | null;
+  user: UserType | null;
+  isAuthenticated: boolean;
+}
+
+const initialState: userState = {
   token: null,
   user: null,
   isAuthenticated: false,
@@ -25,6 +32,11 @@ const userSlice = createSlice({
 });
 
 export const { loginSuccess, logout } = userSlice.actions;
-export const selectToken = (state: RootState) => state.user.token;
-export const selectUser = (state: RootState) => state.user.user;
+export const selectToken = (state: RootState): string | null =>
+  state.user.token;
+export const selectUser = (state: RootState): UserType | null =>
+  state.user.user;
+export const selectUserRole = (state: RootState): string | null =>
+  state.user.user?.role ?? null;
+
 export default userSlice.reducer;

@@ -1,6 +1,5 @@
 import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { CustomMenu, CustomMenuBtn } from "../styles/GalleryStyles";
 import { Typography } from "@mui/material";
@@ -11,7 +10,7 @@ interface BtnsContainerProps {
   item3: React.ReactNode;
 }
 
-export const BtnsMenu = ({ item1, item2, item3 }: BtnsContainerProps) => {
+export const PictureBtns = ({ item1, item2, item3 }: BtnsContainerProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

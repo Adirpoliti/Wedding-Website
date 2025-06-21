@@ -32,7 +32,7 @@ export const MediaContainer = styled(Box)({
 export const AlbumTitle = styled(Typography)({
   fontFamily: "LiaBerta",
   fontSize: "clamp(4rem, 25vw, 15rem)",
-  color: "#FEF6E3",
+  color: "#3C486C",
   position: "relative",
   top: "2rem",
 });
@@ -52,15 +52,18 @@ export const BtnsContainer = styled(Box)({
 
 export const HomeBtns = styled(IconButton)({
   backgroundColor: "rgba(255, 255, 255, 0.2);",
+  "&:hover": {
+    backgroundColor: "rgba(255, 255, 255, 0.1);",
+  },
 });
 
 export const CameraIcon = styled(CameraAltIcon)({
-  color: "#FEF6E3",
+  color: "#FEF5E4",
   fontSize: "clamp(4rem, 20vw, 6rem)",
 });
 
 export const CollectionIcon = styled(CollectionsIcon)({
-  color: "#FEF6E3",
+  color: "#FEF5E4",
   fontSize: "clamp(4rem, 20vw, 6rem)",
 });
 

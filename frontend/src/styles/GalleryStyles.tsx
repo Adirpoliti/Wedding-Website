@@ -35,7 +35,7 @@ export const GalleryTitleBox = styled(Box)({
 export const GalleryTitle = styled(Typography)({
   fontFamily: "LiaBerta",
   fontSize: "clamp(2rem, 18vw, 10rem)",
-  color: "#C89999",
+  color: "#859394",
   paddingTop: "5.5rem",
   paddingLeft: "1rem",
   textAlign: "center",
@@ -63,19 +63,29 @@ export const AlbumMenu = styled(Box)({
 });
 
 export const AlbumMenuTab = styled(Tab)<TabsProps>({
-  color: "#C89999",
+  color: "#9B6237",
   "&.Mui-selected": {
-    color: "#C89999",
+    color: "#9B6237",
     fontWeight: "bold",
   },
 });
 
-export const CustomTabs = styled(Tabs)<TabsProps>({
+export const CustomTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   "& .MuiTabs-indicator": {
-    backgroundColor: "#C89999",
+    backgroundColor: "#9B6237",
     height: 3,
   },
-});
+
+  "& .MuiTabs-flexContainer": {
+    justifyContent: "center",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+  },
+}));
+
 
 export const BtnBox = styled(Box)({
   position: "absolute",

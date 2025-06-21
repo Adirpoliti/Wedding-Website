@@ -96,11 +96,11 @@ export const Gallery = () => {
           onSelectAllAndDownload={handleSelectAllAndDownload}
         />
         <GalleryTitle>רותם וטל</GalleryTitle>
-        <GallerTitleImg src="/assets/images/ringspng.png" alt="rings" />
+        <GallerTitleImg src="/assets/images/ringsnewcolor.png" alt="rings" />
       </GalleryTitleBox>
       <Album
         checkedPics={checkedPics}
-        pictures={allPics}
+        fetchedPictures={allPics}
         onCheckboxToggle={handleCheckboxToggle}
         onDeletePicture={handleDeletePicture}
       />
