@@ -324,7 +324,7 @@ export const Album = ({
                               <IconButton>
                                 <a href={pic.photoUrl} download={pic.fileName}>
                                   <DownloadIcon
-                                    htmlColor="#C89999"
+                                    htmlColor="#859394"
                                     style={{ marginTop: "10px" }}
                                     titleAccess="הורדת תמונה"
                                   />
@@ -334,7 +334,7 @@ export const Album = ({
                             item3={
                               <IconButton onClick={() => handleDelete(pic._id)}>
                                 <DeleteIcon
-                                  htmlColor="#C89999"
+                                  htmlColor="#859394"
                                   titleAccess="מחיקה"
                                 />
                               </IconButton>

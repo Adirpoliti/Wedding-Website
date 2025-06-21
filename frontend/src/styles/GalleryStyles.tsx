@@ -109,9 +109,9 @@ export const CustomMenuBtn = styled(Button)({
 });
 
 export const CheckBoxBtn = styled(Checkbox)<CheckboxProps>({
-  color: "#C89999",
+  color: "#859394",
   "&.Mui-checked": {
-    color: "#C89999",
+    color: "#859394",
   },
 });
 
