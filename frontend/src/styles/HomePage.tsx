@@ -1,13 +1,6 @@
-import {
-  Alert,
-  Box,
-  Button,
-  IconButton,
-  styled,
-  Typography,
-} from "@mui/material";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import CollectionsIcon from "@mui/icons-material/Collections";
+import { Alert, Box, Button, styled, Typography } from "@mui/material";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 export const MainContainer = styled(Box)({
   margin: 0,
@@ -32,7 +25,7 @@ export const MediaContainer = styled(Box)({
 export const AlbumTitle = styled(Typography)({
   fontFamily: "LiaBerta",
   fontSize: "clamp(4rem, 25vw, 15rem)",
-  color: "#3C486C",
+  color: "#FEF5E4",
   position: "relative",
   top: "2rem",
 });
@@ -50,19 +43,12 @@ export const BtnsContainer = styled(Box)({
   gap: "5rem",
 });
 
-export const HomeBtns = styled(IconButton)({
-  backgroundColor: "rgba(255, 255, 255, 0.2);",
-  "&:hover": {
-    backgroundColor: "rgba(255, 255, 255, 0.1);",
-  },
-});
-
-export const CameraIcon = styled(CameraAltIcon)({
+export const CameraIcon = styled(AddAPhotoIcon)({
   color: "#FEF5E4",
   fontSize: "clamp(4rem, 20vw, 6rem)",
 });
 
-export const CollectionIcon = styled(CollectionsIcon)({
+export const CollectionIcon = styled(AddPhotoAlternateIcon)({
   color: "#FEF5E4",
   fontSize: "clamp(4rem, 20vw, 6rem)",
 });

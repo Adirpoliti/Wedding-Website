@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  GallerTitleImg,
   GalleryContainer,
   GalleryTitle,
   GalleryTitleBox,
@@ -9,7 +8,6 @@ import { Album } from "./Album";
 import { CustomDrawer } from "./CustomDrawer";
 import { getPictures, downloadChecked } from "../services/albumServices";
 import type { FetchedPictureType } from "../types/pictureType";
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { loginSuccess } from "../features/user/userSlice";
@@ -95,8 +93,8 @@ export const Gallery = () => {
           onDownloadChecked={() => handleDownloadChecked(checkedPics)}
           onSelectAllAndDownload={handleSelectAllAndDownload}
         />
+        {/* <Typography sx={{fontSize: "1.5rem", color: "#3C486C", paddingTop: "2rem", fontFamily: "LiaBerta", position: "absolute", top: 45, right: 120}}>החתונה של</Typography> */}
         <GalleryTitle>רותם וטל</GalleryTitle>
-        <GallerTitleImg src="/assets/images/ringsnewcolor.png" alt="rings" />
       </GalleryTitleBox>
       <Album
         checkedPics={checkedPics}

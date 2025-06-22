@@ -1,7 +1,7 @@
 import * as React from "react";
-import { AlbumMenu, AlbumMenuTab, CustomTabs } from "../styles/GalleryStyles";
 import { a11yProps } from "./CustomTabPanel";
-import { albumSelectorMediaQueries } from "../utils/mediaQueries";
+import { albumSelectorMediaQueries } from "../utils/MediaQueries";
+import { AlbumMenu, AlbumMenuTab, CustomTabs } from "../styles/AlbumSelector";
 
 interface AlbumMenuComponentProps {
   value: number;

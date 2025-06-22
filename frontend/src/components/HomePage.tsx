@@ -4,7 +4,6 @@ import {
   MainContainer,
   MediaContainer,
   BtnsContainer,
-  HomeBtns,
   CameraIcon,
   CollectionIcon,
   CustomAlert,
@@ -13,7 +12,7 @@ import {
 } from "../styles/HomePage";
 import { addPicture } from "../services/albumServices";
 import { useNavigate } from "react-router";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { CustomDrawer } from "./CustomDrawer";
 
 export const HomePage = () => {
@@ -98,17 +97,13 @@ export const HomePage = () => {
 
           <LowerContainer>
             <BtnsContainer>
-              <HomeBtns onClick={() => galleryInputRef.current?.click()}>
+              <IconButton onClick={() => galleryInputRef.current?.click()}>
                 <CollectionIcon />
-              </HomeBtns>
-              <HomeBtns onClick={() => cameraInputRef.current?.click()}>
+              </IconButton>
+              <IconButton onClick={() => cameraInputRef.current?.click()}>
                 <CameraIcon />
-              </HomeBtns>
+              </IconButton>
             </BtnsContainer>
-            {/* <Box style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <ArrowBackIosNewIcon fontSize="small" />
-              <MoveToGallery href="/gallery">מעבר לגלריה</MoveToGallery>
-            </Box> */}
           </LowerContainer>
         </MediaContainer>
       </MainContainer>

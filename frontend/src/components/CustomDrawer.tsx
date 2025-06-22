@@ -13,14 +13,18 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DownloadIcon from "@mui/icons-material/Download";
 import DownloadingIcon from "@mui/icons-material/Downloading";
 import CollectionsIcon from "@mui/icons-material/Collections";
-import {
-  CustomDrawerMainContainer,
-  DrawerListItem,
-} from "../styles/GalleryStyles";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import ElderlyIcon from "@mui/icons-material/Elderly";
 import { IconButton } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { logout, selectUserRole } from "../features/user/userSlice";
+import {
+  CustomDrawerMainContainer,
+  DrawerListBox,
+  DrawerListItem,
+} from "../styles/CustomDrawer";
 
 interface CustomDrawerProps {
   onDownloadChecked?: () => void;
@@ -38,6 +42,7 @@ export const CustomDrawer = ({
   const dispatch = useAppDispatch();
   const location = useLocation();
   const isHome = location.pathname === "/home";
+  const FirstIcon = isHome ? CollectionsIcon : HomeIcon;
 
   const handleLogin = () => {
     window.location.href = "http://localhost:3001/auth/google";
@@ -55,34 +60,25 @@ export const CustomDrawer = ({
   };
 
   const DrawerList = (
-    <Box
-      dir="rtl"
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-    >
+    <DrawerListBox dir="rtl" role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => navigate(isHome ? "/gallery" : "/home")}
           >
             <ListItemIcon>
-              {isHome ? (
-                <CollectionsIcon htmlColor="#000" />
-              ) : (
-                <HomeIcon htmlColor="#859394" />
-              )}
+              <FirstIcon htmlColor="#3C486C" />
             </ListItemIcon>
             <DrawerListItem primary={isHome ? "גלריה" : "דף הבית"} />
           </ListItemButton>
         </ListItem>
-
         {role === "Admin" && !isHome && (
           <>
+            <Divider />
             <ListItem disablePadding>
               <ListItemButton onClick={onDownloadChecked}>
                 <ListItemIcon>
-                  <DownloadingIcon htmlColor="#859394" />
+                  <DownloadingIcon htmlColor="#3C486C" />
                 </ListItemIcon>
                 <DrawerListItem primary={"הורדת בחירות"} />
               </ListItemButton>
@@ -90,7 +86,7 @@ export const CustomDrawer = ({
             <ListItem disablePadding>
               <ListItemButton onClick={onSelectAllAndDownload}>
                 <ListItemIcon>
-                  <DownloadIcon htmlColor={"#859394"} />
+                  <DownloadIcon htmlColor="#3C486C" />
                 </ListItemIcon>
                 <DrawerListItem primary={"הורדת הכל"} />
               </ListItemButton>
@@ -99,6 +95,47 @@ export const CustomDrawer = ({
         )}
       </List>
 
+      {!isHome && (
+        <>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                console.log("מעבר בין אלבומים");
+              }}
+            >
+              <ListItemIcon>
+                <VisibilityIcon htmlColor="#3C486C" />
+              </ListItemIcon>
+              <DrawerListItem primary={"עין קטנה"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                console.log("מעבר בין אלבומים");
+              }}
+            >
+              <ListItemIcon>
+                <LoyaltyIcon htmlColor="#3C486C" />
+              </ListItemIcon>
+              <DrawerListItem primary={"חופה וקידושין"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                console.log("מעבר בין אלבומים");
+              }}
+            >
+              <ListItemIcon>
+                <ElderlyIcon htmlColor="#3C486C" />
+              </ListItemIcon>
+              <DrawerListItem primary={"מבט אל העבר"} />
+            </ListItemButton>
+          </ListItem>
+        </>
+      )}
       <Divider />
 
       <List>
@@ -106,7 +143,7 @@ export const CustomDrawer = ({
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
-                <LogoutIcon htmlColor={isHome ? "#000" : "#859394"} />
+                <LogoutIcon htmlColor="#3C486C" />
               </ListItemIcon>
               <DrawerListItem primary={"יציאה"} />
             </ListItemButton>
@@ -115,23 +152,23 @@ export const CustomDrawer = ({
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogin}>
               <ListItemIcon>
-                <LoginIcon htmlColor={isHome ? "#000" : "#859394"} />
+                <LoginIcon htmlColor="#3C486C" />
               </ListItemIcon>
               <DrawerListItem primary={"התחברות"} />
             </ListItemButton>
           </ListItem>
         )}
       </List>
-    </Box>
+    </DrawerListBox>
   );
 
   return (
     <CustomDrawerMainContainer>
       <IconButton
         onClick={toggleDrawer(true)}
-        sx={{ color: isHome ? "#3C486C" : "#859394" }}
+        sx={{ color: isHome ? "#FEF5E4" : "#3C486C" }}
       >
-        <MenuIcon />
+        <MenuIcon fontSize="large" />
       </IconButton>
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         {DrawerList}

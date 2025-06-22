@@ -1,21 +1,42 @@
 import { useEffect, useState } from "react";
-import { Box, IconButton } from "@mui/material";
-import { generalMediaQueries } from "../utils/mediaQueries";
+import { generalMediaQueries } from "../utils/MediaQueries";
+import DownloadIcon from "@mui/icons-material/Download";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useAppSelector } from "../app/hooks";
+import { selectUserRole } from "../features/user/userSlice";
+import {
+  PictureViewerArrowBtn,
+  PictureViewerCheckboxBox,
+  PictureViewerImg,
+  PictureViewerMainContainer,
+  PictureViewerMediaBox,
+  PictureViewerPicBox,
+  PictureViewerPicIconBtn,
+  PictureViewerUnderPicBtnsBox,
+} from "../styles/PictureViewerStyles";
+import { CheckBoxBtn } from "../styles/AlbumStyles";
 
 interface PictureViewerProps {
   pictures: { _id: string; photoUrl: string; fileName: string }[];
   currentIndex: number;
+  checkedPics: string[];
   onClose: () => void;
+  onDelete: (id: string) => void;
   onChangeIndex: (newIndex: number) => void;
+  onCheckboxToggle: (id: string) => void;
 }
 
 export const PictureViewer = ({
   pictures,
   currentIndex,
+  checkedPics,
   onClose,
+  onDelete,
   onChangeIndex,
+  onCheckboxToggle,
 }: PictureViewerProps) => {
   const { isXs } = generalMediaQueries();
+  const role = useAppSelector(selectUserRole);
   const [dragStartX, setDragStartX] = useState<number | null>(null);
   const [dragEndX, setDragEndX] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -63,87 +84,90 @@ export const PictureViewer = ({
   };
 
   return (
-    <Box
-      onClick={onClose}
-      sx={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        bgcolor: "rgba(0,0,0,0.8)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 1300,
-        overflow: "hidden",
-        touchAction: "none",
-      }}
-    >
+    <PictureViewerMainContainer onClick={onClose}>
       {!isXs && (
-        <IconButton
+        <PictureViewerArrowBtn
+          side="left"
           onClick={(e) => {
             e.stopPropagation();
             onChangeIndex(
               (currentIndex - 1 + pictures.length) % pictures.length
             );
           }}
-          sx={{
-            position: "absolute",
-            left: 16,
-            color: "white",
-            fontSize: "3rem",
-          }}
           aria-label="Previous Picture"
         >
           &#10094;
-        </IconButton>
+        </PictureViewerArrowBtn>
       )}
 
-      <Box
-        sx={{
-          maxHeight: "80vh",
-          maxWidth: "80vw",
-          overflow: "hidden",
-          borderRadius: 2,
-        }}
-        onClick={(e) => e.stopPropagation()}
-        onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
-        onTouchMove={(e) => setTouchEndX(e.touches[0].clientX)}
-        onTouchEnd={handleSwipe}
-        onMouseDown={(e) => setDragStartX(e.clientX)}
-        onMouseMove={(e) => dragStartX !== null && setDragEndX(e.clientX)}
-        onMouseUp={handleDrag}
-        onMouseLeave={handleDrag}
-      >
-        <img
-          src={pictures[currentIndex].photoUrl}
-          alt={pictures[currentIndex].fileName}
-          style={{
-            maxHeight: "80vh",
-            maxWidth: "80vw",
-            display: "block",
-          }}
-        />
-      </Box>
+      <PictureViewerMediaBox>
+        <PictureViewerPicBox
+          onClick={(e) => e.stopPropagation()}
+          onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+          onTouchMove={(e) => setTouchEndX(e.touches[0].clientX)}
+          onTouchEnd={handleSwipe}
+          onMouseDown={(e) => setDragStartX(e.clientX)}
+          onMouseMove={(e) => dragStartX !== null && setDragEndX(e.clientX)}
+          onMouseUp={handleDrag}
+          onMouseLeave={handleDrag}
+        >
+          <PictureViewerImg
+            src={pictures[currentIndex].photoUrl}
+            alt={pictures[currentIndex].fileName}
+          />
+        </PictureViewerPicBox>
+        <PictureViewerUnderPicBtnsBox>
+          {role === "Admin" && (
+            <PictureViewerPicIconBtn
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(pictures[currentIndex]._id);
+              }}
+            >
+              <DeleteIcon htmlColor="#3C486C"/>
+            </PictureViewerPicIconBtn>
+          )}
+
+          <PictureViewerPicIconBtn
+            onClick={(e) => e.stopPropagation()}
+            style={{ backgroundColor: "white" }}
+          >
+            <a
+              href={pictures[currentIndex].photoUrl}
+              download={pictures[currentIndex].fileName}
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              <DownloadIcon htmlColor="#3C486C"/>
+            </a>
+          </PictureViewerPicIconBtn>
+
+          {role === "Admin" && (
+            <PictureViewerCheckboxBox
+              onClick={(e) => {
+                e.stopPropagation();
+                onCheckboxToggle(pictures[currentIndex]._id);
+              }}
+            >
+              <CheckBoxBtn
+                checked={checkedPics.includes(pictures[currentIndex]._id)}
+              />
+            </PictureViewerCheckboxBox>
+          )}
+        </PictureViewerUnderPicBtnsBox>
+      </PictureViewerMediaBox>
 
       {!isXs && (
-        <IconButton
+        <PictureViewerArrowBtn
+        side="right"
           onClick={(e) => {
             e.stopPropagation();
             onChangeIndex((currentIndex + 1) % pictures.length);
           }}
-          sx={{
-            position: "absolute",
-            right: 16,
-            color: "white",
-            fontSize: "3rem",
-          }}
           aria-label="Next Picture"
         >
           &#10095;
-        </IconButton>
+        </PictureViewerArrowBtn>
       )}
-    </Box>
+    </PictureViewerMainContainer>
   );
 };
