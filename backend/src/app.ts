@@ -17,6 +17,9 @@ const port = process.env.PORT || 3001;
 const server = express();
 
 server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+server.use(expressFileUpload({ parseNested: true }));
+server.use(loggedRequest);
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -40,8 +43,6 @@ server.use(
   })
 );
 
-server.use(expressFileUpload());
-server.use(loggedRequest);
 
 server.use(passport.initialize());
 

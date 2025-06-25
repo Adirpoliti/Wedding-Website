@@ -1,17 +1,17 @@
 import { uploadFiles } from "./uploadFiles";
 import { loggerData } from "../utils/logger";
-import { PhotoModel, PhotoUploadInput, SavedPhoto } from "../models/PhotoModel";
+import { PhotoModel, PhotosFromThePastModel, PhotoUploadInput, SavedPhoto } from "../models/PhotoModel";
 import { RequestTimeoutError, ResourceNotFoundError } from "../models/ErrorModel";
 
 export const addPhoto = async (photo: PhotoUploadInput) => {
     try {
         const { uploaderId, eventName, photoFile } = photo;
-        const path = "Photos";
+        const path = "PhotosFromThePast";
 
         const s3Result = await uploadFiles(photoFile, path);
         if (!s3Result) throw new Error("File upload failed");
 
-        const saved = await PhotoModel.create({
+        const saved = await PhotosFromThePastModel.create({
             uploaderId,
             eventName,
             photoUrl: s3Result.url,
@@ -45,6 +45,15 @@ export const deletePicture = async (_id: string) => {
 export const getAllPictures = async () => {
     try {
         const pictures = await PhotoModel.find() as SavedPhoto[];
+        return pictures;
+    } catch (error) {
+        RequestTimeoutError('Failed to fetch the picture!');
+    }
+}
+
+export const getAllPicturesFromThePast = async () => {
+    try {
+        const pictures = await PhotosFromThePastModel.find() as SavedPhoto[];
         return pictures;
     } catch (error) {
         RequestTimeoutError('Failed to fetch the picture!');
