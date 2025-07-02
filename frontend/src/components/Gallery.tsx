@@ -6,7 +6,11 @@ import {
 } from "../styles/GalleryStyles";
 import { Album } from "./Album";
 import { CustomDrawer } from "./CustomDrawer";
-import { getPictures, downloadChecked } from "../services/albumServices";
+import {
+  getPictures,
+  downloadChecked,
+  getPicsFromThePast,
+} from "../services/albumServices";
 import type { FetchedPictureType } from "../types/pictureType";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
@@ -15,20 +19,19 @@ import { loginSuccess } from "../features/user/userSlice";
 export const Gallery = () => {
   const [checkedPics, setCheckedPics] = useState<string[]>([]);
   const [allPics, setAllPics] = useState<FetchedPictureType[]>([]);
-
+  const [picsFromThePast, setPicsFromThePast] = useState<FetchedPictureType[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const token = params.get("token");
+  const params = new URLSearchParams(location.search);
+  const albumFromUrl = params.get("album");
 
+  useEffect(() => {
+    const token = params.get("token");
     if (token) {
       fetch("http://localhost:3001/auth/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
         .then((user) => {
@@ -41,13 +44,15 @@ export const Gallery = () => {
           console.error("Login failed", err);
         });
     }
-  }, [location.search, dispatch, navigate]);
+  }, [location.search, dispatch, navigate, params]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const pics = await getPictures();
+        const oldPics = await getPicsFromThePast();
         setAllPics(pics);
+        setPicsFromThePast(oldPics);
       } catch (err) {
         console.error("Error fetching pictures:", err);
       }
@@ -93,12 +98,13 @@ export const Gallery = () => {
           onDownloadChecked={() => handleDownloadChecked(checkedPics)}
           onSelectAllAndDownload={handleSelectAllAndDownload}
         />
-        {/* <Typography sx={{fontSize: "1.5rem", color: "#3C486C", paddingTop: "2rem", fontFamily: "LiaBerta", position: "absolute", top: 45, right: 120}}>החתונה של</Typography> */}
         <GalleryTitle>רותם וטל</GalleryTitle>
       </GalleryTitleBox>
       <Album
+        albumFromUrl={albumFromUrl}
         checkedPics={checkedPics}
         fetchedPictures={allPics}
+        picsFromThePast={picsFromThePast}
         onCheckboxToggle={handleCheckboxToggle}
         onDeletePicture={handleDeletePicture}
       />

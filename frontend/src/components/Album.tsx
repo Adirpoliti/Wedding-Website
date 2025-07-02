@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectToken } from "../features/user/userSlice";
 import { deletePicture } from "../services/albumServices";
@@ -27,9 +27,11 @@ import {
 
 interface AlbumProps {
   checkedPics: string[];
-  fetchedPictures: FetchedPictureType[]; // pictures for weddingAlbum only
+  fetchedPictures: FetchedPictureType[];
+  picsFromThePast: FetchedPictureType[];
   onCheckboxToggle: (id: string) => void;
   onDeletePicture: (id: string) => void;
+  albumFromUrl?: string | null;
 }
 
 const myAlbums = [
@@ -39,25 +41,40 @@ const myAlbums = [
 ];
 
 const splitPicturesByAlbum = (
-  weddingPics: FetchedPictureType[]
+  weddingPics: FetchedPictureType[],
+  oldPics: FetchedPictureType[]
 ): Record<string, FetchedPictureType[]> => ({
-  pastPhotos: [], // no pictures for this album yet
+  OldPics: oldPics,
   weddingAlbum: weddingPics,
+  CeremonyPics: [],
 });
 
 export const Album = ({
   checkedPics,
   fetchedPictures,
+  picsFromThePast,
   onCheckboxToggle,
   onDeletePicture,
+  albumFromUrl,
 }: AlbumProps) => {
   const token = useAppSelector(selectToken);
-  const [value, setValue] = useState(myAlbums.length - 1);
+  const albumIndex = myAlbums.findIndex((a) => a.key === albumFromUrl);
+  const [value, setValue] = useState(
+    albumIndex >= 0 ? albumIndex : myAlbums.length - 1
+  );
+
+  useEffect(() => {
+    const albumIndex = myAlbums.findIndex((a) => a.key === albumFromUrl);
+    if (albumIndex >= 0) {
+      setValue(albumIndex);
+    }
+  }, [albumFromUrl]);
+
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [albumsCurrentIndex, setAlbumsCurrentIndex] = useState(0);
 
   const columns = grideMdiaQueries();
-  const albumPictures = splitPicturesByAlbum(fetchedPictures);
+  const albumPictures = splitPicturesByAlbum(fetchedPictures, picsFromThePast);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -139,15 +156,17 @@ export const Album = ({
                             />
                           }
                           item2={
-                            <IconButton>
-                              <a href={pic.photoUrl} download={pic.fileName}>
-                                <DownloadIcon
-                                  htmlColor="#859394"
-                                  style={{ marginTop: "10px" }}
-                                  titleAccess="הורדת תמונה"
-                                />
-                              </a>
-                            </IconButton>
+                            myAlbums[value]?.key === "weddingAlbum" ? (
+                              <IconButton>
+                                <a href={pic.photoUrl} download={pic.fileName}>
+                                  <DownloadIcon
+                                    htmlColor="#859394"
+                                    style={{ marginTop: "10px" }}
+                                    titleAccess="הורדת תמונה"
+                                  />
+                                </a>
+                              </IconButton>
+                            ) : undefined
                           }
                           item3={
                             <IconButton onClick={() => handleDelete(pic._id)}>
@@ -170,6 +189,7 @@ export const Album = ({
 
       {isViewerOpen && (
         <PictureViewer
+          albumKey={myAlbums[value]?.key}
           pictures={albumPictures[myAlbums[value]?.key] ?? []}
           currentIndex={albumsCurrentIndex}
           onClose={closeViewer}

@@ -10,9 +10,9 @@ import {
 } from "../styles/PictureBtnsStyle";
 
 interface BtnsContainerProps {
-  item1: React.ReactNode;
-  item2: React.ReactNode;
-  item3: React.ReactNode;
+  item1?: React.ReactNode;
+  item2?: React.ReactNode;
+  item3?: React.ReactNode;
 }
 
 export const PictureBtns = ({ item1, item2, item3 }: BtnsContainerProps) => {
@@ -53,9 +53,11 @@ export const PictureBtns = ({ item1, item2, item3 }: BtnsContainerProps) => {
             <Typography>בחירה</Typography> {item1}
           </MenuItem>
         )}
-        <MenuItem onClick={handleClose}>
-          <Typography>הורדה</Typography> {item2}
-        </MenuItem>
+        {item2 && (
+          <MenuItem onClick={handleClose}>
+            <Typography>הורדה</Typography> {item2}
+          </MenuItem>
+        )}
         {role === "Admin" && (
           <MenuItem onClick={handleClose}>
             <Typography>מחיקה</Typography>

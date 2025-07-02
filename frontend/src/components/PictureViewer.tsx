@@ -17,6 +17,7 @@ import {
 import { CheckBoxBtn } from "../styles/AlbumStyles";
 
 interface PictureViewerProps {
+  albumKey: string;
   pictures: { _id: string; photoUrl: string; fileName: string }[];
   currentIndex: number;
   checkedPics: string[];
@@ -27,6 +28,7 @@ interface PictureViewerProps {
 }
 
 export const PictureViewer = ({
+  albumKey,
   pictures,
   currentIndex,
   checkedPics,
@@ -124,22 +126,24 @@ export const PictureViewer = ({
                 onDelete(pictures[currentIndex]._id);
               }}
             >
-              <DeleteIcon htmlColor="#3C486C"/>
+              <DeleteIcon htmlColor="#3C486C" />
             </PictureViewerPicIconBtn>
           )}
 
-          <PictureViewerPicIconBtn
-            onClick={(e) => e.stopPropagation()}
-            style={{ backgroundColor: "white" }}
-          >
-            <a
-              href={pictures[currentIndex].photoUrl}
-              download={pictures[currentIndex].fileName}
-              style={{ color: "inherit", textDecoration: "none" }}
+          {albumKey === "weddingAlbum" && (
+            <PictureViewerPicIconBtn
+              onClick={(e) => e.stopPropagation()}
+              style={{ backgroundColor: "white" }}
             >
-              <DownloadIcon htmlColor="#3C486C"/>
-            </a>
-          </PictureViewerPicIconBtn>
+              <a
+                href={pictures[currentIndex].photoUrl}
+                download={pictures[currentIndex].fileName}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <DownloadIcon htmlColor="#3C486C" />
+              </a>
+            </PictureViewerPicIconBtn>
+          )}
 
           {role === "Admin" && (
             <PictureViewerCheckboxBox
@@ -158,7 +162,7 @@ export const PictureViewer = ({
 
       {!isXs && (
         <PictureViewerArrowBtn
-        side="right"
+          side="right"
           onClick={(e) => {
             e.stopPropagation();
             onChangeIndex((currentIndex + 1) % pictures.length);

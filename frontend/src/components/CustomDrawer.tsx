@@ -95,47 +95,39 @@ export const CustomDrawer = ({
         )}
       </List>
 
-      {!isHome && (
-        <>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => {
-                console.log("מעבר בין אלבומים");
-              }}
-            >
-              <ListItemIcon>
-                <VisibilityIcon htmlColor="#3C486C" />
-              </ListItemIcon>
-              <DrawerListItem primary={"עין קטנה"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => {
-                console.log("מעבר בין אלבומים");
-              }}
-            >
-              <ListItemIcon>
-                <LoyaltyIcon htmlColor="#3C486C" />
-              </ListItemIcon>
-              <DrawerListItem primary={"חופה וקידושין"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => {
-                console.log("מעבר בין אלבומים");
-              }}
-            >
-              <ListItemIcon>
-                <ElderlyIcon htmlColor="#3C486C" />
-              </ListItemIcon>
-              <DrawerListItem primary={"מבט אל העבר"} />
-            </ListItemButton>
-          </ListItem>
-        </>
-      )}
+      <Divider />
+      {/* ✅ Album Links - always go to /gallery with ?album=KEY */}
+      <ListItem disablePadding>
+        <ListItemButton
+          onClick={() => navigate("/gallery?album=weddingAlbum")}
+        >
+          <ListItemIcon>
+            <VisibilityIcon htmlColor="#3C486C" />
+          </ListItemIcon>
+          <DrawerListItem primary={"עין קטנה"} />
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton
+          onClick={() => navigate("/gallery?album=CeremonyPics")}
+        >
+          <ListItemIcon>
+            <LoyaltyIcon htmlColor="#3C486C" />
+          </ListItemIcon>
+          <DrawerListItem primary={"חופה וקידושין"} />
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton
+          onClick={() => navigate("/gallery?album=OldPics")}
+        >
+          <ListItemIcon>
+            <ElderlyIcon htmlColor="#3C486C" />
+          </ListItemIcon>
+          <DrawerListItem primary={"מבט אל העבר"} />
+        </ListItemButton>
+      </ListItem>
+
       <Divider />
 
       <List>

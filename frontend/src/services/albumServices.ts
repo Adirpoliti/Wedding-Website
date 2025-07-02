@@ -11,9 +11,14 @@ export const getPictures = async (): Promise<FetchedPictureType[]> => {
     });
 };
 
-// export const getOnePicture = async (id: string) => {
-//   return axios.get(apiConfig.apiOnePicturePath + `/${id}`);
-// };
+export const getPicsFromThePast = async (): Promise<FetchedPictureType[]> => {
+  return axios
+    .get(apiConfig.apiFetchPicsFromThePastPath)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log("Error fetching data:", err);
+    });
+};
 
 export const addPicture = async (formData: FormData) => {
   return axios.post(apiConfig.apiNewPicturePath, formData, {
@@ -30,5 +35,9 @@ export const deletePicture = async (token: string, id: string) => {
 };
 
 export const downloadChecked = async (photoIds: string[]) => {
-  return axios.post(apiConfig.apiDownloadCheckedPath, { photoIds }, { responseType: 'blob' } );
+  return axios.post(
+    apiConfig.apiDownloadCheckedPath,
+    { photoIds },
+    { responseType: "blob" }
+  );
 };
