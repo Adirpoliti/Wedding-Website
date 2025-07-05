@@ -10,7 +10,7 @@ export const generalMediaQueries = () => {
   return { isXs, isSm, isMd, isLgUp };
 };
 
-export const grideMdiaQueries = (): number => {
+export const gridMediaQueries = (): number => {
   const { isXs, isSm, isMd, isLgUp } = generalMediaQueries();
 
   if (isXs) return 2;

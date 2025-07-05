@@ -15,11 +15,14 @@ import type { FetchedPictureType } from "../types/pictureType";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { loginSuccess } from "../features/user/userSlice";
+import { Typography } from "@mui/material";
 
 export const Gallery = () => {
   const [checkedPics, setCheckedPics] = useState<string[]>([]);
   const [allPics, setAllPics] = useState<FetchedPictureType[]>([]);
-  const [picsFromThePast, setPicsFromThePast] = useState<FetchedPictureType[]>([]);
+  const [picsFromThePast, setPicsFromThePast] = useState<FetchedPictureType[]>(
+    []
+  );
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -98,6 +101,19 @@ export const Gallery = () => {
           onDownloadChecked={() => handleDownloadChecked(checkedPics)}
           onSelectAllAndDownload={handleSelectAllAndDownload}
         />
+        <Typography
+          sx={{
+            position: "absolute",
+            top: { xs: "22%", sm: "17%", md: "15%" },
+            right: { xs: "35%", sm: "37%", md: "35%", lg: "43%" },
+            fontSize: "clamp(0.7rem, 5vw, 3rem)",
+            color: "#3C486C",
+            paddingTop: "2rem",
+            fontFamily: "LiaBerta",
+          }}
+        >
+          החתונה של
+        </Typography>
         <GalleryTitle>רותם וטל</GalleryTitle>
       </GalleryTitleBox>
       <Album
