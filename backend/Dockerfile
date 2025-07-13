@@ -1,10 +1,11 @@
-FROM node:18-alpine
+FROM node:18-slim
 
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
 
+# Install TypeScript in case it's not installed globally
 RUN npm install -g typescript
 
 COPY . .
