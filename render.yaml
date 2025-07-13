@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: wedding-backend
+    env: docker
+    region: frankfurt
+    dockerContext: ./backend
+    plan: starter
+    envVars:
+      - key: MONGO_URI
+        value: your-mongo-uri-here
+
+  - type: web
+    name: wedding-frontend
+    env: docker
+    region: frankfurt
+    dockerContext: ./frontend
+    plan: starter
