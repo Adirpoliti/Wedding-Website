@@ -1,21 +1,16 @@
-# Use slim Node base image
-FROM node:18-slim
+FROM node:18-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files and install deps
 COPY package*.json ./
 RUN npm install
 
-# Copy project files including .env
+RUN npm install -g typescript
+
 COPY . .
 
-# Build TypeScript
 RUN npm run build
 
-# Expose backend port
 EXPOSE 3001
 
-# Run the app
 CMD ["node", "dist/app.js"]
