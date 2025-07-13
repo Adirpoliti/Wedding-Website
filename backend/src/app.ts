@@ -25,7 +25,9 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost",
   "http://192.168.1.13",
+  "https://wedding-frontend-f6rv.onrender.com",
 ];
+
 
 server.use(
   cors({
