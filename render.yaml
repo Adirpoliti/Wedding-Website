@@ -10,21 +10,21 @@ services:
       - key: PORT
         value: 3001
       - key: MONGO_URI
-        fromDashboard: true
+        value: null
       - key: JWT_SECRET
-        fromDashboard: true
+        value: null
       - key: GOOGLE_CLIENT_ID
-        fromDashboard: true
+        value: null
       - key: GOOGLE_CLIENT_SECRET
-        fromDashboard: true
+        value: null
       - key: AWS_ACCESS_KEY_ID
-        fromDashboard: true
+        value: null
       - key: AWS_SECRET_ACCESS_KEY
-        fromDashboard: true
+        value: null
       - key: AWS_REGION
-        fromDashboard: true
+        value: null
       - key: AWS_S3_BUCKET
-        fromDashboard: true
+        value: null
 
   - type: web
     name: wedding-frontend
