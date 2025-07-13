@@ -70,9 +70,9 @@ export const Album = ({
   const columns = gridMediaQueries();
   const albumPictures = splitPicturesByAlbum(fetchedPictures, picsFromThePast);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+  setValue(newValue);
+};
 
   const handleDelete = async (picId: string) => {
     if (!token) {
