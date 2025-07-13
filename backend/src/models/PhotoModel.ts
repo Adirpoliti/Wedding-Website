@@ -30,3 +30,4 @@ const photoSchema = new Schema({
 
 export const PhotoModel = mongoose.model('Photo', photoSchema);
 export const PhotosFromThePastModel = mongoose.model('PhotosFromThePast', photoSchema);
+export const PhotosFromTheCanopyModel = mongoose.model('PhotosFromTheCanopy', photoSchema);

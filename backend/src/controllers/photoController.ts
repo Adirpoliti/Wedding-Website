@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
-import { addPhoto, deletePicture, getAllPictures, getAllPicturesFromThePast } from '../logic/pictureLogic';
+import { addPhoto, deletePicture, getAllPictures, getAllPicturesFromTheCanopy, getAllPicturesFromThePast } from '../logic/pictureLogic';
 import { PhotoUploadInput } from '../models/PhotoModel';
 import { checkAdmin } from '../middleware/checkAdmin';
 import { requireAuth } from '../middleware/requiredAuth';
@@ -45,6 +45,15 @@ router.get('/photo/get', async (req: Request, res: Response, next: NextFunction)
 router.get('/photosFromThePast/get', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const response = await getAllPicturesFromThePast();
+        res.json(response);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/photosFromTheCanopy/get', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const response = await getAllPicturesFromTheCanopy();
         res.json(response);
     } catch (err) {
         next(err);
