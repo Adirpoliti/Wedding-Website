@@ -3,15 +3,33 @@ services:
     name: wedding-backend
     env: docker
     region: frankfurt
-    dockerContext: ./backend
     plan: starter
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
     envVars:
+      - key: PORT
+        value: 3001
       - key: MONGO_URI
-        value: your-mongo-uri-here
+        fromDashboard: true
+      - key: JWT_SECRET
+        fromDashboard: true
+      - key: GOOGLE_CLIENT_ID
+        fromDashboard: true
+      - key: GOOGLE_CLIENT_SECRET
+        fromDashboard: true
+      - key: AWS_ACCESS_KEY_ID
+        fromDashboard: true
+      - key: AWS_SECRET_ACCESS_KEY
+        fromDashboard: true
+      - key: AWS_REGION
+        fromDashboard: true
+      - key: AWS_S3_BUCKET
+        fromDashboard: true
 
   - type: web
     name: wedding-frontend
     env: docker
     region: frankfurt
-    dockerContext: ./frontend
     plan: starter
+    dockerContext: ./frontend
+    dockerfilePath: ./frontend/Dockerfile
