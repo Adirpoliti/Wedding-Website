@@ -44,7 +44,7 @@ export const CustomDrawer = ({
   const FirstIcon = isHome ? CollectionsIcon : HomeIcon;
 
   const handleLogin = () => {
-    window.location.href = "http://localhost:3001/auth/google";
+window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
   };
 
   const handleLogout = () => {
