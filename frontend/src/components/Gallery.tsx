@@ -10,6 +10,7 @@ import {
   getPictures,
   downloadChecked,
   getPicsFromThePast,
+  getPicsFromCeremony,
 } from "../services/albumServices";
 import type { FetchedPictureType } from "../types/pictureType";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -23,6 +24,9 @@ export const Gallery = () => {
   const [picsFromThePast, setPicsFromThePast] = useState<FetchedPictureType[]>(
     []
   );
+  const [picsFromCeremony, setPicsFromCeremony] = useState<FetchedPictureType[]>(
+    []
+  );
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -33,7 +37,7 @@ export const Gallery = () => {
   useEffect(() => {
     const token = params.get("token");
     if (token) {
-      fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
+      fetch("http://localhost:3001/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
@@ -54,8 +58,10 @@ export const Gallery = () => {
       try {
         const pics = await getPictures();
         const oldPics = await getPicsFromThePast();
+        const ceremonyPics = await getPicsFromCeremony()
         setAllPics(pics);
         setPicsFromThePast(oldPics);
+        setPicsFromCeremony(ceremonyPics);
       } catch (err) {
         console.error("Error fetching pictures:", err);
       }
@@ -121,6 +127,7 @@ export const Gallery = () => {
         checkedPics={checkedPics}
         fetchedPictures={allPics}
         picsFromThePast={picsFromThePast}
+        picsFromCeremony={picsFromCeremony}
         onCheckboxToggle={handleCheckboxToggle}
         onDeletePicture={handleDeletePicture}
       />

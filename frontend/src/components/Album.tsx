@@ -30,6 +30,7 @@ interface AlbumProps {
   checkedPics: string[];
   fetchedPictures: FetchedPictureType[];
   picsFromThePast: FetchedPictureType[];
+  picsFromCeremony: FetchedPictureType[];
   onCheckboxToggle: (id: string) => void;
   onDeletePicture: (id: string) => void;
   albumFromUrl?: string | null;
@@ -43,17 +44,19 @@ const myAlbums = [
 
 const splitPicturesByAlbum = (
   weddingPics: FetchedPictureType[],
-  oldPics: FetchedPictureType[]
+  oldPics: FetchedPictureType[],
+  ceremonyPics: FetchedPictureType[]
 ): Record<string, FetchedPictureType[]> => ({
   OldPics: oldPics,
   weddingAlbum: weddingPics,
-  CeremonyPics: [],
+  CeremonyPics: ceremonyPics,
 });
 
 export const Album = ({
   checkedPics,
   fetchedPictures,
   picsFromThePast,
+  picsFromCeremony,
   onCheckboxToggle,
   onDeletePicture,
   albumFromUrl,
@@ -68,7 +71,7 @@ export const Album = ({
   const [albumsCurrentIndex, setAlbumsCurrentIndex] = useState(0);
 
   const columns = gridMediaQueries();
-  const albumPictures = splitPicturesByAlbum(fetchedPictures, picsFromThePast);
+  const albumPictures = splitPicturesByAlbum(fetchedPictures, picsFromThePast, picsFromCeremony);
 
 const handleChange = (_: React.SyntheticEvent, newValue: number) => {
   setValue(newValue);

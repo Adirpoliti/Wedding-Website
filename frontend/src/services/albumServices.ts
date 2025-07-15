@@ -20,6 +20,15 @@ export const getPicsFromThePast = async (): Promise<FetchedPictureType[]> => {
     });
 };
 
+export const getPicsFromCeremony = async (): Promise<FetchedPictureType[]> => {
+  return axios
+    .get(apiConfig.apiFetchPicsFromCeremonyPath)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log("Error fetching data:", err);
+    });
+};
+
 export const addPicture = async (formData: FormData) => {
   return axios.post(apiConfig.apiNewPicturePath, formData, {
     headers: {
