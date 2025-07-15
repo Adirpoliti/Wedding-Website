@@ -26,16 +26,19 @@ export const HomePage = () => {
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
     const formData = new FormData();
-    formData.append("photoFile", file);
+    for (const file of Array.from(files)) {
+      formData.append("photoFile", file);
+    }
+
     try {
-      await addPicture(formData as any);
+      await addPicture(formData as any); // assuming it handles multiple
       setAlertInfo({
         severity: "success",
-        message: "התמונה הועלתה בהצלחה!",
+        message: "התמונות הועלו בהצלחה!",
       });
     } catch (err) {
       console.error("שגיאה בהעלאה:", err);
@@ -80,7 +83,7 @@ export const HomePage = () => {
           <input
             ref={cameraInputRef}
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             capture="environment"
             style={{ display: "none" }}
             onChange={handleFileChange}
@@ -93,6 +96,7 @@ export const HomePage = () => {
             accept="image/*"
             style={{ display: "none" }}
             onChange={handleFileChange}
+            multiple
           />
 
           <LowerContainer>
