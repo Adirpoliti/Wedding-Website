@@ -93,7 +93,7 @@ export const HomePage = () => {
           <input
             ref={galleryInputRef}
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             style={{ display: "none" }}
             onChange={handleFileChange}
             multiple
