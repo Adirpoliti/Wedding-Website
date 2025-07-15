@@ -13,6 +13,7 @@ import {
   PictureViewerPicBox,
   PictureViewerPicIconBtn,
   PictureViewerUnderPicBtnsBox,
+  PictureViewerVideo,
 } from "../styles/PictureViewerStyles";
 import { CheckBoxBtn } from "../styles/AlbumStyles";
 
@@ -43,6 +44,12 @@ export const PictureViewer = ({
   const [dragEndX, setDragEndX] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+  const currentMedia = pictures[currentIndex];
+
+  const isVideo = (url: string) => {
+    return url.match(/\.(mp4|webm|ogg)$/i);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -113,31 +120,36 @@ export const PictureViewer = ({
           onMouseUp={handleDrag}
           onMouseLeave={handleDrag}
         >
-          <PictureViewerImg
-            src={pictures[currentIndex].photoUrl}
-            alt={pictures[currentIndex].fileName}
-          />
+          {isVideo(currentMedia.photoUrl) ? (
+            <PictureViewerVideo src={currentMedia.photoUrl} controls />
+          ) : (
+            <PictureViewerImg
+              src={currentMedia.photoUrl}
+              alt={currentMedia.fileName}
+            />
+          )}
         </PictureViewerPicBox>
+
         <PictureViewerUnderPicBtnsBox>
           {role === "Admin" && (
             <PictureViewerPicIconBtn
               onClick={(e) => {
                 e.stopPropagation();
-                onDelete(pictures[currentIndex]._id);
+                onDelete(currentMedia._id);
               }}
             >
               <DeleteIcon htmlColor="#3C486C" />
             </PictureViewerPicIconBtn>
           )}
 
-          {albumKey === "weddingAlbum" && (
+          {albumKey === "weddingAlbum" && !isVideo(currentMedia.photoUrl) && (
             <PictureViewerPicIconBtn
               onClick={(e) => e.stopPropagation()}
               style={{ backgroundColor: "white" }}
             >
               <a
-                href={pictures[currentIndex].photoUrl}
-                download={pictures[currentIndex].fileName}
+                href={currentMedia.photoUrl}
+                download={currentMedia.fileName}
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 <DownloadIcon htmlColor="#3C486C" />
@@ -149,12 +161,10 @@ export const PictureViewer = ({
             <PictureViewerCheckboxBox
               onClick={(e) => {
                 e.stopPropagation();
-                onCheckboxToggle(pictures[currentIndex]._id);
+                onCheckboxToggle(currentMedia._id);
               }}
             >
-              <CheckBoxBtn
-                checked={checkedPics.includes(pictures[currentIndex]._id)}
-              />
+              <CheckBoxBtn checked={checkedPics.includes(currentMedia._id)} />
             </PictureViewerCheckboxBox>
           )}
         </PictureViewerUnderPicBtnsBox>
