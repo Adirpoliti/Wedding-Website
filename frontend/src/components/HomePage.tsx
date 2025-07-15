@@ -73,7 +73,7 @@ export const HomePage = () => {
         <CustomDrawer />
         <MediaContainer>
           <Box>
-            <AlbumTitle>איציק וטל</AlbumTitle>
+            <AlbumTitle>רותם וטל</AlbumTitle>
           </Box>
 
           {/* זה להעלאה מהמצלמה , צריך לבדוק */}
