@@ -25,7 +25,7 @@ export const GalleryTitleBox = styled(Box)({
 });
 
 export const GalleryTitle = styled(Typography)({
-  fontFamily: "LiaBerta",
+  fontFamily: "Lia Berta",
   fontSize: "clamp(2rem, 18vw, 10rem)",
   color: "#3C486C",
   paddingTop: "5.5rem",

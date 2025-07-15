@@ -23,7 +23,7 @@ export const MediaContainer = styled(Box)({
 });
 
 export const AlbumTitle = styled(Typography)({
-  fontFamily: "LiaBerta",
+  fontFamily: "Lia Berta",
   fontSize: "clamp(4rem, 25vw, 15rem)",
   color: "#FEF5E4",
   position: "relative",

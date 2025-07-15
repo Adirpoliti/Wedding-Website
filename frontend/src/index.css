@@ -22,14 +22,14 @@ body {
 }
 
 /* @font-face {
-  font-family: "LiaBerta";
-  src: url("./assets/fonts/LiaBerta-Regular.ttf");
+  font-family: "Lia Berta";
+  src: url("./assets/fonts/Lia Berta-Regular.ttf");
 } */
 
 @font-face {
-  font-family: "LiaBerta";
-  src: url("./assets/fonts//LiaBerta-Regular.woff2") format("woff2"),
-    url("./assets/fonts//LiaBerta-Regular.woff") format("woff");
+  font-family: 'Lia Berta';
+  src: url('/fonts/Lia Berta-Regular-patched.woff2') format('woff2'),
+       url('/fonts/Lia Berta-Regular-patched.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
