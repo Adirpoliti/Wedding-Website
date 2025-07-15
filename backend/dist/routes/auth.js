@@ -9,17 +9,18 @@ const requiredAuth_1 = require("../middleware/requiredAuth");
 const checkAdmin_1 = require("../middleware/checkAdmin");
 const authLogic_1 = require("../logic/authLogic");
 const router = express_1.default.Router();
+const FRONTEND_URL = "https://wedding-frontend-f6rv.onrender.com";
 router.get("/google", passportInit_1.default.authenticate("google", {
     scope: ["profile", "email"],
 }));
 router.get("/google/callback", (req, res, next) => {
     passportInit_1.default.authenticate("google", { session: false }, (err, user, info) => {
         if (err || !user || typeof user !== "object" || !("id" in user)) {
-            return res.redirect("http://localhost:5173/?login=failed");
+            return res.redirect(`${FRONTEND_URL}/?login=failed`);
         }
         console.log("Authenticated user:", user);
         const token = (0, authLogic_1.createJwtForUser)(user.id);
-        const redirectUrl = `http://localhost:5173/gallery?token=${token}`;
+        const redirectUrl = `${FRONTEND_URL}/gallery?token=${token}`;
         res.redirect(redirectUrl);
     })(req, res, next);
 });
