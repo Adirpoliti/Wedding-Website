@@ -42,12 +42,29 @@ export const PictureViewerImg = styled("img")({
   display: "block",
 });
 
+export const PictureViewerVideo = styled("video")({
+  width: "100%",
+  height: "auto",
+  maxWidth: "100%",
+  maxHeight: "80vh",
+  objectFit: "contain",
+  display: "block",
+  borderRadius: "1rem",
+  aspectRatio: "2 / 3", 
+});
+
+
+
 export const PictureViewerPicBox = styled(Box)({
   maxHeight: "80vh",
   maxWidth: "80vw",
   overflow: "hidden",
   borderRadius: "1rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 });
+
 
 export const PictureViewerUnderPicBtnsBox = styled(Box)({
   display: "flex",

@@ -27,9 +27,10 @@ body {
 } */
 
 @font-face {
-  font-family: 'Lia Berta';
-  src: url('/fonts/Lia Berta-Regular-patched.woff2') format('woff2'),
-       url('/fonts/Lia Berta-Regular-patched.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Lia Berta';
+    src: url('LiaBerta-Regular.woff2') format('woff2'),
+        url('LiaBerta-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
