@@ -159,7 +159,7 @@ export const HomePage = () => {
       await addPicture(formData as any);
       setAlertInfo({
         severity: "success",
-        message: "התמונות הועלו בהצלחה!",
+        message: "תודה ששיתפתם אותנו בעוד רגע מתוק!",
       });
     } catch (err) {
       console.error("שגיאה בהעלאה:", err);
