@@ -8,7 +8,7 @@ const ErrorModel_1 = require("../models/ErrorModel");
 const addPhoto = async (photo) => {
     try {
         const { uploaderId, eventName, photoFile } = photo;
-        const path = "PhotosFromTheCanopy";
+        const path = "Photos";
         const s3Result = await (0, uploadFiles_1.uploadFiles)(photoFile, path);
         if (!s3Result)
             throw new Error("File upload failed");

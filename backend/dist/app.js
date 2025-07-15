@@ -5,22 +5,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const catch_all_1 = require("./middleware/catch-all");
-const log_request_1 = require("./middleware/log-request");
 const passportInit_1 = __importDefault(require("./middleware/passportInit"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const photoController_1 = __importDefault(require("./controllers/photoController"));
 const photoRoutes_1 = __importDefault(require("./routes/photoRoutes"));
 const port = process.env.PORT || 3001;
 const server = (0, express_1.default)();
-server.use(express_1.default.json());
-server.use(express_1.default.urlencoded({ extended: true }));
-server.use((0, express_fileupload_1.default)({ parseNested: true }));
-server.use(log_request_1.loggedRequest);
+server.use(express_1.default.json({ limit: '200mb' }));
+server.use(express_1.default.urlencoded({ extended: true, limit: '200mb' }));
+server.use((0, express_fileupload_1.default)({
+    parseNested: true,
+    limits: { fileSize: 200 * 1024 * 1024 }
+}));
 const allowedOrigins = [
     "http://localhost:5173",
     "http://localhost",
@@ -46,6 +48,7 @@ mongoose_1.default
     .connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.error("MongoDB error:", err));
+server.use('/uploads', express_1.default.static(path_1.default.join(__dirname, 'uploads')));
 server.use("/auth", auth_1.default);
 server.use("/api", photoController_1.default);
 server.use("/api", photoRoutes_1.default);

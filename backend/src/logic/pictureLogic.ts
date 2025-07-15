@@ -6,7 +6,7 @@ import { RequestTimeoutError, ResourceNotFoundError } from "../models/ErrorModel
 export const addPhoto = async (photo: PhotoUploadInput) => {
     try {
         const { uploaderId, eventName, photoFile } = photo;
-        const path = "PhotosFromTheCanopy";
+        const path = "Photos";
 
         const s3Result = await uploadFiles(photoFile, path);
         if (!s3Result) throw new Error("File upload failed");

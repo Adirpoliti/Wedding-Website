@@ -29,7 +29,7 @@ export const uploadFiles = async (file: UploadedFile, path: string) => {
       Bucket: process.env.AWS_S3_BUCKET!,
       Key: key,
       Body: file.data,
-      ContentType: file.mimetype,
+      ContentType: file.mimetype || "application/octet-stream",
       ContentDisposition: `attachment; filename="${file.name}"`,
       CacheControl: "no-cache, no-store, must-revalidate",
     });
@@ -53,7 +53,7 @@ export const getSignedUrlPromise = async (filePath: string): Promise<string> => 
       Key: filePath
     });
 
-    const url = await getSignedUrl(s3, command, { expiresIn: 43200 }); 
+    const url = await getSignedUrl(s3, command, { expiresIn: 43200 });
     return url;
   } catch (err) {
     loggerData.log("error", `Signed URL Error: ${(err as any).message}`);

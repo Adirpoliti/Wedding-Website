@@ -3,27 +3,45 @@ import { addPhoto, deletePicture, getAllPictures, getAllPicturesFromTheCanopy, g
 import { PhotoUploadInput } from '../models/PhotoModel';
 import { checkAdmin } from '../middleware/checkAdmin';
 import { requireAuth } from '../middleware/requiredAuth';
+import { UploadedFile } from 'express-fileupload';
 
 
 const router = express.Router();
 
 router.post('/photo/add', async (req: Request, res: Response, nextfunc: NextFunction) => {
   try {
-    const files = req.files?.photoFile;
     const { uploaderId, eventName } = req.body;
 
-    if (!files || !Array.isArray(files)) {
-      throw new Error("No files uploaded or invalid format");
+    if (!req.files) {
+      throw new Error("No files uploaded.");
+    }
+
+    const uploadedItems: UploadedFile[] = [];
+
+    const processInput = (input: UploadedFile | UploadedFile[] | undefined) => {
+      if (!input) return;
+      if (Array.isArray(input)) {
+        uploadedItems.push(...input);
+      } else {
+        uploadedItems.push(input);
+      }
+    };
+
+    processInput(req.files.photoFile);
+    processInput(req.files.videoFile);
+
+    if (uploadedItems.length === 0) {
+      throw new Error("No valid files found in request.");
     }
 
     const allUploads = await Promise.all(
-      files.map(file => {
-        const newPicture: PhotoUploadInput = {
+      uploadedItems.map(file => {
+        const newUpload = {
           uploaderId,
           eventName,
-          photoFile: file
+          photoFile: file,
         };
-        return addPhoto(newPicture);
+        return addPhoto(newUpload);
       })
     );
 

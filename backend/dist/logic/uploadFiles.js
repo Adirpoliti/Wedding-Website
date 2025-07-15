@@ -23,7 +23,7 @@ const uploadFiles = async (file, path) => {
             Bucket: process.env.AWS_S3_BUCKET,
             Key: key,
             Body: file.data,
-            ContentType: file.mimetype,
+            ContentType: file.mimetype || "application/octet-stream",
             ContentDisposition: `attachment; filename="${file.name}"`,
             CacheControl: "no-cache, no-store, must-revalidate",
         });

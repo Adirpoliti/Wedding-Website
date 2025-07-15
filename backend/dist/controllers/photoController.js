@@ -10,18 +10,33 @@ const requiredAuth_1 = require("../middleware/requiredAuth");
 const router = express_1.default.Router();
 router.post('/photo/add', async (req, res, nextfunc) => {
     try {
-        const files = req.files?.photoFile;
         const { uploaderId, eventName } = req.body;
-        if (!files || !Array.isArray(files)) {
-            throw new Error("No files uploaded or invalid format");
+        if (!req.files) {
+            throw new Error("No files uploaded.");
         }
-        const allUploads = await Promise.all(files.map(file => {
-            const newPicture = {
+        const uploadedItems = [];
+        const processInput = (input) => {
+            if (!input)
+                return;
+            if (Array.isArray(input)) {
+                uploadedItems.push(...input);
+            }
+            else {
+                uploadedItems.push(input);
+            }
+        };
+        processInput(req.files.photoFile);
+        processInput(req.files.videoFile);
+        if (uploadedItems.length === 0) {
+            throw new Error("No valid files found in request.");
+        }
+        const allUploads = await Promise.all(uploadedItems.map(file => {
+            const newUpload = {
                 uploaderId,
                 eventName,
-                photoFile: file
+                photoFile: file,
             };
-            return (0, pictureLogic_1.addPhoto)(newPicture);
+            return (0, pictureLogic_1.addPhoto)(newUpload);
         }));
         res.status(200).json(allUploads);
     }
