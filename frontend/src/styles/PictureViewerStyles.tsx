@@ -44,13 +44,13 @@ export const PictureViewerImg = styled("img")({
 
 export const PictureViewerVideo = styled("video")({
   width: "100%",
-  height: "auto", // ✅ allows it to scale with aspect ratio
+  height: "auto",
   maxWidth: "100%",
-  maxHeight: "80vh", // ✅ limit like image
+  maxHeight: "80vh",
   objectFit: "contain",
   display: "block",
   borderRadius: "1rem",
-  aspectRatio: "16 / 9", // ✅ helps avoid initial square shape
+  aspectRatio: "2 / 3", 
 });
 
 

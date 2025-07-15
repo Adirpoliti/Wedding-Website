@@ -121,7 +121,7 @@ export const PictureViewer = ({
           onMouseLeave={handleDrag}
         >
           {isVideo(currentMedia.photoUrl) ? (
-            <PictureViewerVideo src={currentMedia.photoUrl} controls />
+            <PictureViewerVideo src={currentMedia.photoUrl} controls autoPlay />
           ) : (
             <PictureViewerImg
               src={currentMedia.photoUrl}
