@@ -22,10 +22,10 @@ body {
 }
 
 @font-face {
-    font-family: 'Lia Berta';
-    src: url('LiaBerta-Regular-clean.woff2') format('woff2'),
-        url('LiaBerta-Regular-clean.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Lia Berta';
+  src: url('/fonts/LiaBerta-Regular-clean.woff2') format('woff2'),
+       url('/fonts/LiaBerta-Regular-clean.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
