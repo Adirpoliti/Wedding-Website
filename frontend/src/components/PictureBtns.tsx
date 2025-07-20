@@ -1,6 +1,5 @@
 import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
-import { Typography } from "@mui/material";
 import { useAppSelector } from "../app/hooks";
 import { selectUserRole } from "../features/user/userSlice";
 import {
@@ -48,22 +47,13 @@ export const PictureBtns = ({ item1, item2, item3 }: BtnsContainerProps) => {
           },
         }}
       >
-        {role === "Admin" && (
-          <MenuItem onClick={handleClose}>
-            <Typography>בחירה</Typography> {item1}
-          </MenuItem>
-        )}
-        {item2 && (
-          <MenuItem onClick={handleClose}>
-            <Typography>הורדה</Typography> {item2}
-          </MenuItem>
-        )}
-        {role === "Admin" && (
-          <MenuItem onClick={handleClose}>
-            <Typography>מחיקה</Typography>
-            {item3}
-          </MenuItem>
-        )}
+        {/* {role === "Admin" && ( */}
+        <MenuItem onClick={handleClose}>{item1}</MenuItem>
+        {/* )} */}
+        {item2 && <MenuItem onClick={handleClose}>{item2}</MenuItem>}
+        {/* {role === "Admin" &&  */}
+        <MenuItem onClick={handleClose}>{item3}</MenuItem>
+       
       </CustomMenu>
     </>
   );

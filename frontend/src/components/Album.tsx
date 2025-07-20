@@ -221,7 +221,6 @@
 //   );
 // };
 
-
 import * as React from "react";
 import { useState } from "react";
 import { useAppSelector } from "../app/hooks";
@@ -235,6 +234,8 @@ import {
   IconButton,
   ImageList,
   CircularProgress,
+  FormControlLabel,
+  Typography,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -249,6 +250,7 @@ import {
   GalleryContentBox,
   ImageListItemWrapper,
 } from "../styles/AlbumStyles";
+import { ItemBox, ItemBoxA } from "../styles/PictureBtnsStyle";
 
 interface AlbumProps {
   value: number;
@@ -287,7 +289,11 @@ export const Album = ({
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [albumsCurrentIndex, setAlbumsCurrentIndex] = useState(0);
   const columns = gridMediaQueries();
-  const albumPictures = splitPicturesByAlbum(fetchedPictures, picsFromThePast, picsFromCeremony);
+  const albumPictures = splitPicturesByAlbum(
+    fetchedPictures,
+    picsFromThePast,
+    picsFromCeremony
+  );
 
   const handleDelete = async (picId: string) => {
     if (!token) return;
@@ -297,7 +303,9 @@ export const Album = ({
       setAlbumsCurrentIndex((prevIndex) => {
         const newPics = albumPictures[albums[value]?.key] ?? [];
         const filteredPics = newPics.filter((pic) => pic._id !== picId);
-        return prevIndex >= filteredPics.length ? Math.max(filteredPics.length - 1, 0) : prevIndex;
+        return prevIndex >= filteredPics.length
+          ? Math.max(filteredPics.length - 1, 0)
+          : prevIndex;
       });
     } catch (err) {
       console.log(err);
@@ -338,24 +346,63 @@ export const Album = ({
                       <BtnBox className="btn-box">
                         <PictureBtns
                           item1={
-                            <CheckBoxBtn
-                              checked={checkedPics.includes(pic._id)}
-                              onClick={() => onCheckboxToggle(pic._id)}
-                            />
+                            <ItemBox onClick={() => onCheckboxToggle(pic._id)}>
+                              <Typography
+                                sx={{
+                                  fontSize: "1rem",
+                                  fontWeight: "bold",
+                                  color: "#fff",
+                                }}
+                              >
+                                בחירה
+                              </Typography>
+                              <Box
+                                sx={{ display: "flex", alignItems: "center" }}
+                              >
+                                <CheckBoxBtn
+                                  checked={checkedPics.includes(pic._id)}
+                                />
+                              </Box>
+                            </ItemBox>
                           }
                           item2={
                             albums[value]?.key === "weddingAlbum" ? (
-                              <IconButton>
-                                <a href={pic.photoUrl} download={pic.fileName}>
-                                  <DownloadIcon htmlColor="#859394" style={{ marginTop: "10px" }} />
-                                </a>
-                              </IconButton>
+                              <ItemBoxA
+                                component="a"
+                                href={pic.photoUrl}
+                                download={pic.fileName}
+                              >
+                                <Typography
+                                  sx={{
+                                    fontSize: "1rem",
+                                    fontWeight: "bold",
+                                    color: "#fff",
+                                  }}
+                                >
+                                  הורדה
+                                </Typography>
+                                <DownloadIcon
+                                  htmlColor="#fff"
+                                  fontSize="medium"
+                                />
+                              </ItemBoxA>
                             ) : undefined
                           }
                           item3={
-                            <IconButton onClick={() => handleDelete(pic._id)}>
-                              <DeleteIcon htmlColor="#859394" />
-                            </IconButton>
+                            <ItemBox
+                              onClick={() => handleDelete(pic._id)}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: "1rem",
+                                  fontWeight: "bold",
+                                  color: "#fff",
+                                }}
+                              >
+                                מחיקה
+                              </Typography>
+                              <DeleteIcon htmlColor="#fff" fontSize="medium" />
+                            </ItemBox>
                           }
                         />
                       </BtnBox>
@@ -394,9 +441,21 @@ const FadeImage = ({
   onClick?: () => void;
 }) => {
   const [loaded, setLoaded] = useState(false);
+  const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
+
   return (
     <FadedImageWrapper loaded={loaded} onClick={onClick}>
-      <img src={src} alt={alt} onLoad={() => setLoaded(true)} />
+      {isVideo ? (
+        <video
+          src={src}
+          onLoadedData={() => setLoaded(true)}
+          muted
+          playsInline
+          controls={false}
+        />
+      ) : (
+        <img src={src} alt={alt} onLoad={() => setLoaded(true)} />
+      )}
     </FadedImageWrapper>
   );
 };

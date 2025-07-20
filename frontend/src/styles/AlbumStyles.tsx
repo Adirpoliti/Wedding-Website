@@ -48,9 +48,14 @@ export const BtnBox = styled(Box)({
 });
 
 export const CheckBoxBtn = styled(Checkbox)<CheckboxProps>({
-  color: "#3C486C",
+  padding: 0,
+  margin: 0,
+  color: "#fff",
   "&.Mui-checked": {
-    color: "#3C486C",
+    color: "#fff",
+  },
+  "& svg": {
+    fontSize: "24px",
   },
 });
 
@@ -78,6 +83,16 @@ export const FadedImageWrapper = styled(Box, {
   borderRadius: "6px",
   cursor: "pointer",
   "& img": {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    transition: "opacity 0.3s ease-out",
+    opacity: loaded ? 1 : 0,
+  },
+  "& video": {
     position: "absolute",
     top: 0,
     left: 0,

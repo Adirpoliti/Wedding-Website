@@ -50,7 +50,7 @@ export const CameraIcon = styled(AddAPhotoIcon)({
 
 export const CollectionIcon = styled(AddPhotoAlternateIcon)({
   color: "#FEF5E4",
-  fontSize: "clamp(4.5rem, 20vw, 6.5rem)",
+  fontSize: "clamp(5.5rem, 20vw, 6.5rem)",
   transform: "scaleX(-1)"
 });
 
