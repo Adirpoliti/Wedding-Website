@@ -43,6 +43,6 @@ router.get("/me", requireAuth, (req, res) => {
 
 router.get("/admin/secret", requireAuth, checkAdmin, (req, res) => {
   res.json({ message: "You are an admin!", user: (req as any).user });
-});
+})
 
 export default router;
