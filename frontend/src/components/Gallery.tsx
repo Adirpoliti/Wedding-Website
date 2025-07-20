@@ -189,7 +189,7 @@ export const Gallery = () => {
   useEffect(() => {
     const token = new URLSearchParams(location.search).get("token");
     if (token) {
-      fetch("http://localhost:3001/auth/me", {
+      fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
