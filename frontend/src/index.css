@@ -21,15 +21,10 @@ body {
   padding: 0;
 }
 
-/* @font-face {
-  font-family: "Lia Berta";
-  src: url("./assets/fonts/Lia Berta-Regular.ttf");
-} */
-
 @font-face {
     font-family: 'Lia Berta';
-    src: url('LiaBerta-Regular.woff2') format('woff2'),
-        url('LiaBerta-Regular.woff') format('woff');
+    src: url('LiaBerta-Regular-clean.woff2') format('woff2'),
+        url('LiaBerta-Regular-clean.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
