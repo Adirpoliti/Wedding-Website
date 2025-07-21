@@ -47,13 +47,9 @@ export const PictureBtns = ({ item1, item2, item3 }: BtnsContainerProps) => {
           },
         }}
       >
-        {/* {role === "Admin" && ( */}
-        <MenuItem onClick={handleClose}>{item1}</MenuItem>
-        {/* )} */}
+        {role === "Admin" && <MenuItem onClick={handleClose}>{item1}</MenuItem>}
         {item2 && <MenuItem onClick={handleClose}>{item2}</MenuItem>}
-        {/* {role === "Admin" &&  */}
-        <MenuItem onClick={handleClose}>{item3}</MenuItem>
-       
+        {role === "Admin" && <MenuItem onClick={handleClose}>{item3}</MenuItem>}
       </CustomMenu>
     </>
   );
