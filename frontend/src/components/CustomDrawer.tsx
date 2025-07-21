@@ -76,7 +76,7 @@ export const CustomDrawer = ({
         </ListItem>
         {role === "Admin" && !isHome && (
           <>
-            <Divider />
+            <Divider color="#fff" sx={{ width: "80%", margin: "auto" }} />
             <ListItem disablePadding>
               <ListItemButton onClick={onDownloadChecked}>
                 <ListItemIcon>
@@ -98,7 +98,7 @@ export const CustomDrawer = ({
       </List>
       {!isHome && (
         <>
-          <Divider />
+          <Divider color="#fff" sx={{ width: "80%", margin: "auto" }} />
           <ListItem disablePadding>
             <ListItemButton
               onClick={() => {
@@ -140,7 +140,7 @@ export const CustomDrawer = ({
           </ListItem>
         </>
       )}
-      <Divider />
+      <Divider color="#fff" sx={{ width: "80%", margin: "auto" }} />
 
       <List>
         {isAuthenticated ? (

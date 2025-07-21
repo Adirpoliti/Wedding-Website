@@ -12,17 +12,10 @@ import {
 } from "../styles/HomePage";
 import { addPicture } from "../services/albumServices";
 import { useNavigate } from "react-router";
-import {
-  Box,
-  IconButton,
-  Dialog,
-  DialogActions,
-  Button,
-} from "@mui/material";
+import { Box, IconButton, Dialog, DialogActions, Button } from "@mui/material";
 import { CustomDrawer } from "./CustomDrawer";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import VideocamIcon from "@mui/icons-material/Videocam";
-
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -131,64 +124,72 @@ export const HomePage = () => {
         </MediaContainer>
       </MainContainer>
 
-      {/* Camera choice modal */}
-<Dialog
-  open={cameraChoiceOpen}
-  onClose={() => setCameraChoiceOpen(false)}
-  sx={{
-    "& .MuiDialog-paper": {
-      backgroundColor: "rgba(255, 255, 255, 0.05)",
-      backdropFilter: "blur(12px)",
-      boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-      border: "1px solid rgba(255, 255, 255, 0.15)",
-      borderRadius: 2,
-      p: 2,
-      minWidth: 250,
-      direction: "rtl",
-    },
-  }}
->
-  <DialogActions
-    sx={{
-      flexDirection: "column",
-      gap: 1.5,
-      p: 0,
-    }}
-  >
-    <Button
-      fullWidth
-      variant="contained"
-      onClick={() => {
-        setCameraChoiceOpen(false);
-        photoInputRef.current?.click();
-      }}
-      startIcon={<PhotoCameraIcon sx={{ ml: 1 }} />} 
-      sx={{
-        borderRadius: "12px",
-        backgroundColor: "rgba(255, 255, 255, 0.15)", 
-      }}
-    >
-      צילום תמונה
-    </Button>
+      <Dialog
+        open={cameraChoiceOpen}
+        onClose={() => setCameraChoiceOpen(false)}
+        sx={{
+          "& .MuiDialog-paper": {
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            borderRadius: 2,
+            p: 2,
+            minWidth: 250,
+            direction: "rtl",
+          },
+        }}
+      >
+        <DialogActions
+          sx={{
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 1.5,
+            p: 0,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              width: "100%",
+            }}
+          >
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => {
+                setCameraChoiceOpen(false);
+                photoInputRef.current?.click();
+              }}
+              startIcon={<PhotoCameraIcon sx={{ ml: 2 }} />}
+              sx={{
+                borderRadius: "12px",
+                backgroundColor: "rgba(255, 255, 255, 0.15)",
+              }}
+            >
+              צילום תמונה
+            </Button>
 
-    <Button
-      fullWidth
-      variant="contained"
-      onClick={() => {
-        setCameraChoiceOpen(false);
-        videoInputRef.current?.click();
-      }}
-      startIcon={<VideocamIcon sx={{ ml: 1 }} />}
-      sx={{
-        borderRadius: "12px",
-        backgroundColor: "rgba(255, 255, 255, 0.15)", 
-      }}
-    >
-      צילום וידאו
-    </Button>
-  </DialogActions>
-</Dialog>
-
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => {
+                setCameraChoiceOpen(false);
+                videoInputRef.current?.click();
+              }}
+              startIcon={<VideocamIcon sx={{ ml: 2   }} />}
+              sx={{
+                borderRadius: "12px",
+                backgroundColor: "rgba(255, 255, 255, 0.15)",
+              }}
+            >
+              צילום וידאו
+            </Button>
+          </Box>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
