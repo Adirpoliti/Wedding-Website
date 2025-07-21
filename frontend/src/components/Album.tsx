@@ -19,6 +19,7 @@ import { CustomTabPanel } from "./CustomTabPanel";
 import { PictureViewer } from "./PictureViewer";
 import { AlbumSelector } from "./AlbumSelector";
 import {
+  AlbumsVideoPlayBtn,
   BtnBox,
   CheckBoxBtn,
   FadedImageWrapper,
@@ -26,6 +27,7 @@ import {
   ImageListItemWrapper,
 } from "../styles/AlbumStyles";
 import { ItemBox, ItemBoxA } from "../styles/PictureBtnsStyle";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 interface AlbumProps {
   value: number;
@@ -164,9 +166,7 @@ export const Album = ({
                             ) : undefined
                           }
                           item3={
-                            <ItemBox
-                              onClick={() => handleDelete(pic._id)}
-                            >
+                            <ItemBox onClick={() => handleDelete(pic._id)}>
                               <Typography
                                 sx={{
                                   fontSize: "1rem",
@@ -221,13 +221,23 @@ const FadeImage = ({
   return (
     <FadedImageWrapper loaded={loaded} onClick={onClick}>
       {isVideo ? (
-        <video
-          src={src}
-          onLoadedData={() => setLoaded(true)}
-          muted
-          playsInline
-          controls={false}
-        />
+        <>
+          <video
+            src={src}
+            onLoadedData={() => setLoaded(true)}
+            muted
+            playsInline
+            controls={false}
+          />
+          <AlbumsVideoPlayBtn>
+            <PlayArrowIcon
+              style={{
+                fontSize: "5rem",
+                color: "#fff",
+              }}
+            />
+          </AlbumsVideoPlayBtn>
+        </>
       ) : (
         <img src={src} alt={alt} onLoad={() => setLoaded(true)} />
       )}

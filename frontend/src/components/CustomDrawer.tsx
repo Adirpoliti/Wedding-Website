@@ -69,7 +69,7 @@ export const CustomDrawer = ({
             onClick={() => navigate(isHome ? "/gallery" : "/home")}
           >
             <ListItemIcon>
-              <FirstIcon htmlColor="#3C486C" />
+              <FirstIcon htmlColor="#fff" />
             </ListItemIcon>
             <DrawerListItem primary={isHome ? "גלריה" : "דף הבית"} />
           </ListItemButton>
@@ -80,7 +80,7 @@ export const CustomDrawer = ({
             <ListItem disablePadding>
               <ListItemButton onClick={onDownloadChecked}>
                 <ListItemIcon>
-                  <DownloadingIcon htmlColor="#3C486C" />
+                  <DownloadingIcon htmlColor="#fff" />
                 </ListItemIcon>
                 <DrawerListItem primary={"הורדת בחירות"} />
               </ListItemButton>
@@ -88,7 +88,7 @@ export const CustomDrawer = ({
             <ListItem disablePadding>
               <ListItemButton onClick={onSelectAllAndDownload}>
                 <ListItemIcon>
-                  <DownloadIcon htmlColor="#3C486C" />
+                  <DownloadIcon htmlColor="#fff" />
                 </ListItemIcon>
                 <DrawerListItem primary={"הורדת הכל"} />
               </ListItemButton>
@@ -107,7 +107,7 @@ export const CustomDrawer = ({
               }}
             >
               <ListItemIcon>
-                <VisibilityIcon htmlColor="#3C486C" />
+                <VisibilityIcon htmlColor="#fff" />
               </ListItemIcon>
               <DrawerListItem primary={"עין קטנה"} />
             </ListItemButton>
@@ -120,7 +120,7 @@ export const CustomDrawer = ({
               }}
             >
               <ListItemIcon>
-                <LoyaltyIcon htmlColor="#3C486C" />
+                <LoyaltyIcon htmlColor="#fff" />
               </ListItemIcon>
               <DrawerListItem primary={"חופה וקידושין"} />
             </ListItemButton>
@@ -133,7 +133,7 @@ export const CustomDrawer = ({
               }}
             >
               <ListItemIcon>
-                <ElderlyIcon htmlColor="#3C486C" />
+                <ElderlyIcon htmlColor="#fff" />
               </ListItemIcon>
               <DrawerListItem primary={"מבט אל העבר"} />
             </ListItemButton>
@@ -147,7 +147,7 @@ export const CustomDrawer = ({
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
-                <LogoutIcon htmlColor="#3C486C" />
+                <LogoutIcon htmlColor="#ffff" />
               </ListItemIcon>
               <DrawerListItem primary={"יציאה"} />
             </ListItemButton>
@@ -156,7 +156,7 @@ export const CustomDrawer = ({
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogin}>
               <ListItemIcon>
-                <LoginIcon htmlColor="#3C486C" />
+                <LoginIcon htmlColor="#ffff" />
               </ListItemIcon>
               <DrawerListItem primary={"התחברות"} />
             </ListItemButton>
@@ -174,7 +174,21 @@ export const CustomDrawer = ({
       >
         <MenuIcon fontSize="large" />
       </IconButton>
-      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={toggleDrawer(false)}
+        PaperProps={{
+          sx: {
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            color: "#fff",
+            borderTopLeftRadius: "1rem",
+            borderBottomLeftRadius: "1rem",
+          },
+        }}
+      >
         {DrawerList}
       </Drawer>
     </CustomDrawerMainContainer>

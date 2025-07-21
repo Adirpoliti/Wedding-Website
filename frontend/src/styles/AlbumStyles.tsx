@@ -103,3 +103,19 @@ export const FadedImageWrapper = styled(Box, {
     opacity: loaded ? 1 : 0,
   },
 }));
+
+export const AlbumsVideoPlayBtn = styled(Box)({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "rgba(0, 0, 0, 0.65)",
+  backdropFilter: "blur(12px)",
+  borderRadius: "50%",
+  padding: "0.3rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  pointerEvents: "none",
+  boxShadow: "0 0 1rem rgba(0, 0, 0, 0.7)",
+});

@@ -7,6 +7,7 @@ import { selectUserRole } from "../features/user/userSlice";
 import {
   PictureViewerArrowBtn,
   PictureViewerCheckboxBox,
+  PictureViewerDownloadLink,
   PictureViewerImg,
   PictureViewerMainContainer,
   PictureViewerMediaBox,
@@ -138,23 +139,19 @@ export const PictureViewer = ({
                 onDelete(currentMedia._id);
               }}
             >
-              <DeleteIcon htmlColor="#3C486C" />
+              <DeleteIcon htmlColor="#fff" />
             </PictureViewerPicIconBtn>
           )}
 
           {albumKey === "weddingAlbum" && !isVideo(currentMedia.photoUrl) && (
-            <PictureViewerPicIconBtn
+            <PictureViewerDownloadLink
+              component="a"
+              href={currentMedia.photoUrl}
+              download={currentMedia.fileName}
               onClick={(e) => e.stopPropagation()}
-              style={{ backgroundColor: "white" }}
             >
-              <a
-                href={currentMedia.photoUrl}
-                download={currentMedia.fileName}
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                <DownloadIcon htmlColor="#3C486C" />
-              </a>
-            </PictureViewerPicIconBtn>
+              <DownloadIcon htmlColor="#fff" />
+            </PictureViewerDownloadLink>
           )}
 
           {role === "Admin" && (

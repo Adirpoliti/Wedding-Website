@@ -1,4 +1,4 @@
-import { Box, IconButton, styled } from "@mui/material";
+import { Box, IconButton, styled, type BoxProps } from "@mui/material";
 
 interface ArrowBtnProps {
   side: "left" | "right";
@@ -72,15 +72,43 @@ export const PictureViewerUnderPicBtnsBox = styled(Box)({
 });
 
 export const PictureViewerPicIconBtn = styled(IconButton)({
-  backgroundColor: "white",
+  backgroundColor: "rgba(255, 255, 255, 0.15)",
+  backdropFilter: "blur(10px)",
+  borderRadius: "50%",
   width: "2.6rem",
   height: "2.6rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   "&:hover": {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
   },
 });
 
-export const PictureViewerCheckboxBox = styled(Box)({
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
+export const PictureViewerDownloadLink = styled(Box)<BoxProps<'a'>>({
+  backgroundColor: "rgba(255, 255, 255, 0.15)",
+  backdropFilter: "blur(10px)",
   borderRadius: "50%",
+  width: "2.6rem",
+  height: "2.6rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textDecoration: "none",
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+  },
+});
+
+
+export const PictureViewerCheckboxBox = styled(Box)({
+  backgroundColor: "rgba(255, 255, 255, 0.15)",
+  backdropFilter: "blur(10px)",
+  borderRadius: "50%",
+  width: "2.6rem",
+  height: "2.6rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 });
