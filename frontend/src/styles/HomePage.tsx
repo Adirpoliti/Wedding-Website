@@ -11,7 +11,7 @@ export const MainContainer = styled(Box)({
   backgroundPosition: "center",
   backgroundSize: "cover",
   width: "100%",
-  height: "100vh",
+  height: "100dvh",
 });
 
 export const MediaContainer = styled(Box)({
