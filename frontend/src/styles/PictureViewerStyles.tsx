@@ -81,6 +81,6 @@ export const PictureViewerPicIconBtn = styled(IconButton)({
 });
 
 export const PictureViewerCheckboxBox = styled(Box)({
-  backgroundColor: "white",
+  backgroundColor: "rgba(255, 255, 255, 0.6)",
   borderRadius: "50%",
 });
