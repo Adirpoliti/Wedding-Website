@@ -62,11 +62,12 @@ export const CustomAlert = styled(Alert)({
   margin: "0 auto",
   direction: "rtl",
   width: "fit-content",
-  fontFamily: "Tahoma",
+  zIndex: 9999,
+  // fontFamily: "Tahoma",
 });
 
 export const CustomAlertBtn = styled(Button)({
   marginRight: 30,
   border: "1px solid white",
-  fontFamily: "Tahoma",
+  // fontFamily: "Tahoma",
 });

@@ -110,8 +110,8 @@ export const Album = ({
                   <CircularProgress sx={{ color: "#9B6237" }} />
                 </Box>
               ) : (
-                <ImageList variant="masonry" cols={columns} gap={8}>
-                  {pics.map((pic, index) => (
+                <ImageList cols={columns} gap={8}>
+                  {pics.slice().reverse().map((pic, index) => (
                     <ImageListItemWrapper key={pic._id}>
                       <ImageListItem>
                         <FadeImage
