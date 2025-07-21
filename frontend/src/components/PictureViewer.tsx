@@ -180,7 +180,7 @@ export const PictureViewer = ({
             </PictureViewerCheckboxBox>
           )}
         </PictureViewerUnderPicBtnsBox>
-        {showSwipeHint && (
+        {showSwipeHint && isXs && (
           <Box
             sx={{
               position: "absolute",
@@ -188,7 +188,7 @@ export const PictureViewer = ({
               left: "50%",
               transform: "translate(-50%, -50%)",
               zIndex: 20,
-              width: "9rem", 
+              width: "15rem",
               pointerEvents: "none",
               opacity: 0.9,
             }}
