@@ -17,6 +17,8 @@ import {
   PictureViewerVideo,
 } from "../styles/PictureViewerStyles";
 import { CheckBoxBtn } from "../styles/AlbumStyles";
+import { Box } from "@mui/material";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface PictureViewerProps {
   albumKey: string;
@@ -45,6 +47,7 @@ export const PictureViewer = ({
   const [dragEndX, setDragEndX] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
 
   const reversedPictures = [...pictures].reverse();
   const currentMedia = reversedPictures[currentIndex];
@@ -52,6 +55,17 @@ export const PictureViewer = ({
   const isVideo = (url: string) => {
     return url.match(/\.(mp4|webm|ogg)$/i);
   };
+
+  useEffect(() => {
+    const wasShown = localStorage.getItem("viewerOpened");
+    if (!wasShown) {
+      setShowSwipeHint(true);
+      localStorage.setItem("viewerOpened", "true");
+      setTimeout(() => {
+        setShowSwipeHint(false);
+      }, 5000);
+    }
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -166,6 +180,26 @@ export const PictureViewer = ({
             </PictureViewerCheckboxBox>
           )}
         </PictureViewerUnderPicBtnsBox>
+        {showSwipeHint && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 20,
+              width: "9rem", 
+              pointerEvents: "none",
+              opacity: 0.9,
+            }}
+          >
+            <DotLottieReact
+              src="https://lottie.host/4567f393-1e61-41d2-9072-309e6f39ffb5/b7E9iGMoQh.lottie"
+              loop
+              autoplay
+            />
+          </Box>
+        )}
       </PictureViewerMediaBox>
 
       {!isXs && (

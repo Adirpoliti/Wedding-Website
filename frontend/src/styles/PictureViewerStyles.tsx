@@ -34,6 +34,7 @@ export const PictureViewerMediaBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   gap: "0.5rem",
+  position: "relative",
 });
 
 export const PictureViewerImg = styled("img")({
