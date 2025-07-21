@@ -46,7 +46,8 @@ export const PictureViewer = ({
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
 
-  const currentMedia = pictures[currentIndex];
+  const reversedPictures = [...pictures].reverse();
+  const currentMedia = reversedPictures[currentIndex];
 
   const isVideo = (url: string) => {
     return url.match(/\.(mp4|webm|ogg)$/i);
