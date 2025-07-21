@@ -63,7 +63,7 @@ export const PictureViewer = ({
       localStorage.setItem("viewerOpened", "true");
       setTimeout(() => {
         setShowSwipeHint(false);
-      }, 5000);
+      }, 7000);
     }
   }, []);
 
