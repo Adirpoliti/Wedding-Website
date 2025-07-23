@@ -158,10 +158,10 @@ export const PictureViewer = ({
             </PictureViewerPicIconBtn>
           )}
 
-          {albumKey === "weddingAlbum" && !isVideo(currentMedia.compressedUrl) && (
+          {albumKey === "weddingAlbum" && !isVideo(currentMedia.originalUrl) && (
             <PictureViewerDownloadLink
               component="a"
-              href={currentMedia.compressedUrl}
+              href={currentMedia.originalUrl}
               download={currentMedia.fileName}
               onClick={(e) => e.stopPropagation()}
             >
