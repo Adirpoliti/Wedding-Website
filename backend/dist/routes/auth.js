@@ -9,8 +9,8 @@ const requiredAuth_1 = require("../middleware/requiredAuth");
 const checkAdmin_1 = require("../middleware/checkAdmin");
 const authLogic_1 = require("../logic/authLogic");
 const router = express_1.default.Router();
-// const FRONTEND_URL = "https://wedding-frontend-f6rv.onrender.com";
-const FRONTEND_URL = "http://localhost:5173";
+const FRONTEND_URL = "https://wedding-frontend-f6rv.onrender.com";
+// const FRONTEND_URL = "http://localhost:5173";
 router.get("/google", passportInit_1.default.authenticate("google", {
     scope: ["profile", "email"],
 }));
