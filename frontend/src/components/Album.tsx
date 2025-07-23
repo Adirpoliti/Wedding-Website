@@ -72,7 +72,7 @@ export const Album = ({
     picsFromCeremony
   );
 
-  const isAdmin = useAppSelector((state) => state.user.user?.role === "admin");
+  const isAdmin = useAppSelector((state) => state.user.user?.role === "Admin");
 
   const handleDelete = async (picId: string) => {
     if (!token) return;
