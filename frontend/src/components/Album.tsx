@@ -125,7 +125,7 @@ export const Album = ({
                           onClick={() => openViewer(index)}
                         />
                       </ImageListItem>
-                      {(isAdmin || key === "weddingAlbum") && (
+                      {(isAdmin || (!isAdmin && key === "weddingAlbum")) && (
                         <BtnBox className="btn-box">
                           <PictureBtns
                             albumKey={key}
