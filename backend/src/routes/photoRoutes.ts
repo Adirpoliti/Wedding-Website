@@ -1,7 +1,7 @@
 import express from "express";
 import archiver from "archiver";
 import axios from "axios";
-import { PhotoModel } from "../models/PhotoModel";
+import { PhotoModel, PhotosFromThePastModel, PhotosFromTheCanopyModel } from "../models/PhotoModel";
 
 const router = express.Router();
 
@@ -14,9 +14,13 @@ router.post("/photo/download-zip", async (req: express.Request, res: express.Res
       return;
     }
 
-    const photos = await PhotoModel.find({ _id: { $in: photoIds } })
-      .select("originalUrl fileName")
-      .lean();
+    const [photos1, photos2, photos3] = await Promise.all([
+      PhotoModel.find({ _id: { $in: photoIds } }).select("originalUrl fileName").lean(),
+      PhotosFromThePastModel.find({ _id: { $in: photoIds } }).select("originalUrl fileName").lean(),
+      PhotosFromTheCanopyModel.find({ _id: { $in: photoIds } }).select("originalUrl fileName").lean(),
+    ]);
+
+    const allPhotos = [...photos1, ...photos2, ...photos3];
 
     const archive = archiver("zip", { zlib: { level: 9 } });
 
@@ -26,7 +30,7 @@ router.post("/photo/download-zip", async (req: express.Request, res: express.Res
     archive.on("error", err => next(err));
     archive.pipe(res);
 
-    for (const photo of photos) {
+    for (const photo of allPhotos) {
       const url = photo.originalUrl;
       if (!url) continue;
       const response = await axios.get(url, { responseType: "stream" });

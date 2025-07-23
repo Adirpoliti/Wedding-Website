@@ -8,12 +8,19 @@ const uuid_1 = require("uuid");
 const client_s3_1 = require("@aws-sdk/client-s3");
 const logger_1 = require("../utils/logger");
 const sharp_1 = __importDefault(require("sharp"));
+const node_http_handler_1 = require("@smithy/node-http-handler");
+const https_1 = require("https");
 const s3 = new client_s3_1.S3Client({
     region: process.env.AWS_REGION,
     credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
+    requestHandler: new node_http_handler_1.NodeHttpHandler({
+        connectionTimeout: 5000,
+        socketTimeout: 30000,
+        httpsAgent: new https_1.Agent({ maxSockets: 400 }),
+    }),
 });
 const uploadFiles = async (file, path) => {
     try {

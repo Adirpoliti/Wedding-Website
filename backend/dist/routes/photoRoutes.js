@@ -15,15 +15,18 @@ router.post("/photo/download-zip", async (req, res, next) => {
             res.status(400).json({ message: "No photo IDs provided" });
             return;
         }
-        const photos = await PhotoModel_1.PhotoModel.find({ _id: { $in: photoIds } })
-            .select("originalUrl fileName")
-            .lean();
+        const [photos1, photos2, photos3] = await Promise.all([
+            PhotoModel_1.PhotoModel.find({ _id: { $in: photoIds } }).select("originalUrl fileName").lean(),
+            PhotoModel_1.PhotosFromThePastModel.find({ _id: { $in: photoIds } }).select("originalUrl fileName").lean(),
+            PhotoModel_1.PhotosFromTheCanopyModel.find({ _id: { $in: photoIds } }).select("originalUrl fileName").lean(),
+        ]);
+        const allPhotos = [...photos1, ...photos2, ...photos3];
         const archive = (0, archiver_1.default)("zip", { zlib: { level: 9 } });
         res.setHeader("Content-Type", "application/zip");
         res.setHeader("Content-Disposition", "attachment; filename=photos.zip");
         archive.on("error", err => next(err));
         archive.pipe(res);
-        for (const photo of photos) {
+        for (const photo of allPhotos) {
             const url = photo.originalUrl;
             if (!url)
                 continue;
