@@ -1,11 +1,10 @@
 import { UploadedFile } from "express-fileupload";
 import { v4 as uuid } from "uuid";
-import {
-  S3Client,
-  PutObjectCommand,
-} from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { loggerData } from "../utils/logger";
 import sharp from "sharp";
+import { NodeHttpHandler } from "@smithy/node-http-handler";
+import { Agent } from "https";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION!,
@@ -13,6 +12,11 @@ const s3 = new S3Client({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
   },
+  requestHandler: new NodeHttpHandler({
+    connectionTimeout: 5000,
+    socketTimeout: 30000,
+    httpsAgent: new Agent({ maxSockets: 400 }),
+  }),
 });
 
 export const uploadFiles = async (file: UploadedFile, path: string) => {
