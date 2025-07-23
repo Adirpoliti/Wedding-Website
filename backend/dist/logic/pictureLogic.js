@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPhotosByIds = exports.getAllPicturesFromTheCanopy = exports.getAllPicturesFromThePast = exports.getAllPictures = exports.deletePicture = exports.addPhoto = void 0;
+exports.getAllPicturesFromTheCanopy = exports.getAllPicturesFromThePast = exports.getAllPictures = exports.deletePicture = exports.addPhoto = void 0;
 const uploadFiles_1 = require("./uploadFiles");
 const logger_1 = require("../utils/logger");
 const PhotoModel_1 = require("../models/PhotoModel");
@@ -15,16 +15,18 @@ const addPhoto = async (photo) => {
         const saved = await PhotoModel_1.PhotoModel.create({
             uploaderId,
             eventName,
-            photoUrl: s3Result.url,
+            originalUrl: s3Result.original.url,
+            compressedUrl: s3Result.compressed?.url || null,
+            type: photoFile.mimetype.startsWith("video/") ? "video" : "image",
             fileName: photoFile.name,
             mimeType: photoFile.mimetype,
-            size: photoFile.size
+            size: photoFile.size,
         });
         return saved;
     }
     catch (err) {
-        logger_1.loggerData.log('error', `Err: ${err?.message || err}`);
-        throw new Error('Failed to save file');
+        logger_1.loggerData.log("error", `Err: ${err?.message || err}`);
+        throw new Error("Failed to save photo");
     }
 };
 exports.addPhoto = addPhoto;
@@ -71,23 +73,3 @@ const getAllPicturesFromTheCanopy = async () => {
     }
 };
 exports.getAllPicturesFromTheCanopy = getAllPicturesFromTheCanopy;
-const getPhotosByIds = async (photoIds) => {
-    try {
-        const photos = await PhotoModel_1.PhotoModel.find({ _id: { $in: photoIds } })
-            .select("photoUrl fileName")
-            .lean();
-        return photos.map(photo => {
-            const url = photo.photoUrl;
-            const fileName = photo.fileName ?? (url ? url.split("/").pop() : "file.jpg");
-            return {
-                url,
-                name: fileName
-            };
-        });
-    }
-    catch (error) {
-        logger_1.loggerData.log('error', `Failed to get photos by IDs: ${error}`);
-        throw new Error("Failed to get photo data for zip download");
-    }
-};
-exports.getPhotosByIds = getPhotosByIds;

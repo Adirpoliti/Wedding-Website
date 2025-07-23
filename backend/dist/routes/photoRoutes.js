@@ -16,7 +16,7 @@ router.post("/photo/download-zip", async (req, res, next) => {
             return;
         }
         const photos = await PhotoModel_1.PhotoModel.find({ _id: { $in: photoIds } })
-            .select("photoUrl fileName")
+            .select("originalUrl fileName")
             .lean();
         const archive = (0, archiver_1.default)("zip", { zlib: { level: 9 } });
         res.setHeader("Content-Type", "application/zip");
@@ -24,11 +24,11 @@ router.post("/photo/download-zip", async (req, res, next) => {
         archive.on("error", err => next(err));
         archive.pipe(res);
         for (const photo of photos) {
-            if (!photo.photoUrl) {
+            const url = photo.originalUrl;
+            if (!url)
                 continue;
-            }
-            const response = await axios_1.default.get(photo.photoUrl, { responseType: "stream" });
-            const fileName = photo.fileName ?? photo.photoUrl.split("/").pop() ?? "file.jpg";
+            const response = await axios_1.default.get(url, { responseType: "stream" });
+            const fileName = photo.fileName ?? url.split("/").pop() ?? "file.jpg";
             archive.append(response.data, { name: fileName });
         }
         archive.finalize();

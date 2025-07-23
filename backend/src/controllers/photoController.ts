@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
 import { addPhoto, deletePicture, getAllPictures, getAllPicturesFromTheCanopy, getAllPicturesFromThePast } from '../logic/pictureLogic';
-import { PhotoUploadInput } from '../models/PhotoModel';
 import { checkAdmin } from '../middleware/checkAdmin';
 import { requireAuth } from '../middleware/requiredAuth';
 import { UploadedFile } from 'express-fileupload';

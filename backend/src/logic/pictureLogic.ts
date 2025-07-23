@@ -14,18 +14,21 @@ export const addPhoto = async (photo: PhotoUploadInput) => {
         const saved = await PhotoModel.create({
             uploaderId,
             eventName,
-            photoUrl: s3Result.url,
+            originalUrl: s3Result.original.url,
+            compressedUrl: s3Result.compressed?.url || null,
+            type: photoFile.mimetype.startsWith("video/") ? "video" : "image",
             fileName: photoFile.name,
             mimeType: photoFile.mimetype,
-            size: photoFile.size
+            size: photoFile.size,
         });
 
         return saved;
     } catch (err: any) {
-        loggerData.log('error', `Err: ${err?.message || err}`);
-        throw new Error('Failed to save file');
+        loggerData.log("error", `Err: ${err?.message || err}`);
+        throw new Error("Failed to save photo");
     }
 };
+
 
 
 export const deletePicture = async (_id: string) => {
@@ -68,25 +71,3 @@ export const getAllPicturesFromTheCanopy = async () => {
         RequestTimeoutError('Failed to fetch the picture!');
     }
 }
-
-export const getPhotosByIds = async (photoIds: string[]) => {
-    try {
-        const photos = await PhotoModel.find({ _id: { $in: photoIds } })
-            .select("photoUrl fileName")
-            .lean();
-
-        return photos.map(photo => {
-            const url = photo.photoUrl;
-            const fileName = photo.fileName ?? (url ? url.split("/").pop() : "file.jpg");
-
-            return {
-                url,
-                name: fileName
-            };
-        });
-
-    } catch (error) {
-        loggerData.log('error', `Failed to get photos by IDs: ${error}`);
-        throw new Error("Failed to get photo data for zip download");
-    }
-};

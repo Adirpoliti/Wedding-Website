@@ -6,7 +6,8 @@ import { createJwtForUser } from "../logic/authLogic";
 
 const router = express.Router();
 
-const FRONTEND_URL = "https://wedding-frontend-f6rv.onrender.com";
+// const FRONTEND_URL = "https://wedding-frontend-f6rv.onrender.com";
+const FRONTEND_URL = "http://localhost:5173";
 
 router.get(
   "/google",

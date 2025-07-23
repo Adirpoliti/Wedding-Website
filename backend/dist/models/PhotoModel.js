@@ -38,10 +38,12 @@ const mongoose_1 = __importStar(require("mongoose"));
 const photoSchema = new mongoose_1.Schema({
     uploaderId: String,
     eventName: String,
-    photoUrl: String,
+    originalUrl: String,
+    compressedUrl: String,
     fileName: String,
     mimeType: String,
     size: Number,
+    type: String,
 }, { timestamps: true });
 exports.PhotoModel = mongoose_1.default.model('Photo', photoSchema);
 exports.PhotosFromThePastModel = mongoose_1.default.model('PhotosFromThePast', photoSchema);
