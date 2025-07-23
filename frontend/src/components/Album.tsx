@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { useState } from "react";
 import { useAppSelector } from "../app/hooks";
@@ -120,8 +121,9 @@ export const Album = ({
                     <ImageListItemWrapper key={pic._id}>
                       <ImageListItem>
                         <FadeImage
-                          src={pic.compressedUrl}
+                          src={pic.compressedUrl || pic.originalUrl}
                           alt={pic.fileName}
+                          type={pic.type as "image" | "video"}
                           onClick={() => openViewer(index)}
                         />
                       </ImageListItem>
@@ -203,7 +205,15 @@ export const Album = ({
       {isViewerOpen && (
         <PictureViewer
           albumKey={albums[value]?.key}
-          pictures={albumPictures[albums[value]?.key] ?? []}
+          pictures={
+            (albumPictures[albums[value]?.key] ?? []) as {
+              _id: string;
+              originalUrl: string;
+              compressedUrl: string;
+              fileName: string;
+              type: "image" | "video";
+            }[]
+          }
           currentIndex={albumsCurrentIndex}
           onClose={closeViewer}
           onChangeIndex={setAlbumsCurrentIndex}
@@ -220,18 +230,19 @@ export const Album = ({
 const FadeImage = ({
   src,
   alt,
+  type,
   onClick,
 }: {
   src: string;
   alt: string;
+  type: "image" | "video";
   onClick?: () => void;
 }) => {
   const [loaded, setLoaded] = useState(false);
-  const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
 
   return (
     <FadedImageWrapper loaded={loaded} onClick={onClick}>
-      {isVideo ? (
+      {type === "video" ? (
         <>
           <video
             src={src}
@@ -239,6 +250,7 @@ const FadeImage = ({
             muted
             playsInline
             controls={false}
+            style={{ width: "100%", height: "auto" }}
           />
           <AlbumsVideoPlayBtn>
             <PlayArrowIcon

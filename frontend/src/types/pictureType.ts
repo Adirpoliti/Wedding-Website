@@ -3,4 +3,5 @@ export type FetchedPictureType = {
     originalUrl: string;
     compressedUrl: string;
     fileName: string;
+    type: string;
 }

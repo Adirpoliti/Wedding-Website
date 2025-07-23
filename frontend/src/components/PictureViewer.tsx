@@ -27,6 +27,7 @@ interface PictureViewerProps {
     originalUrl: string;
     compressedUrl: string;
     fileName: string;
+    type: "image" | "video";
   }[];
   currentIndex: number;
   checkedPics: string[];
@@ -54,12 +55,9 @@ export const PictureViewer = ({
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
 
-  const reversedPictures = albumKey === "CeremonyPics" ? pictures : [...pictures].reverse();
+  const reversedPictures =
+    albumKey === "CeremonyPics" ? pictures : [...pictures].reverse();
   const currentMedia = reversedPictures[currentIndex];
-
-  const isVideo = (url: string) => {
-    return url.match(/\.(mp4|webm|ogg)$/i);
-  };
 
   useEffect(() => {
     const wasShown = localStorage.getItem("viewerOpened");
@@ -141,9 +139,9 @@ export const PictureViewer = ({
           onMouseUp={handleDrag}
           onMouseLeave={handleDrag}
         >
-          {isVideo(currentMedia.compressedUrl) ? (
+          {currentMedia.type === "video" ? (
             <PictureViewerVideo
-              src={currentMedia.compressedUrl}
+              src={currentMedia.originalUrl}
               controls
               autoPlay
             />
@@ -168,7 +166,7 @@ export const PictureViewer = ({
           )}
 
           {(role === "Admin" || albumKey === "weddingAlbum") &&
-            !isVideo(currentMedia.originalUrl) && (
+            currentMedia.type !== "video" && (
               <PictureViewerDownloadLink
                 component="a"
                 href={currentMedia.originalUrl}
