@@ -9,21 +9,32 @@ import {
 } from "../styles/PictureBtnsStyle";
 
 interface BtnsContainerProps {
+  albumKey: string;
   item1?: React.ReactNode;
   item2?: React.ReactNode;
   item3?: React.ReactNode;
 }
 
-export const PictureBtns = ({ item1, item2, item3 }: BtnsContainerProps) => {
+export const PictureBtns = ({
+  albumKey,
+  item1,
+  item2,
+  item3,
+}: BtnsContainerProps) => {
   const role = useAppSelector(selectUserRole);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const canShowMenu = role === "Admin" || albumKey === "weddingAlbum";
+  if (!canShowMenu) return null;
 
   return (
     <>
@@ -47,9 +58,15 @@ export const PictureBtns = ({ item1, item2, item3 }: BtnsContainerProps) => {
           },
         }}
       >
-        {role === "Admin" && <MenuItem onClick={handleClose}>{item1}</MenuItem>}
-        {item2 && <MenuItem onClick={handleClose}>{item2}</MenuItem>}
-        {role === "Admin" && <MenuItem onClick={handleClose}>{item3}</MenuItem>}
+        {role === "Admin" && item1 && (
+          <MenuItem onClick={handleClose}>{item1}</MenuItem>
+        )}
+        {albumKey === "weddingAlbum" && item2 && (
+          <MenuItem onClick={handleClose}>{item2}</MenuItem>
+        )}
+        {role === "Admin" && item3 && (
+          <MenuItem onClick={handleClose}>{item3}</MenuItem>
+        )}
       </CustomMenu>
     </>
   );

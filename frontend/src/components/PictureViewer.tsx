@@ -22,7 +22,12 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface PictureViewerProps {
   albumKey: string;
-  pictures: { _id: string; originalUrl: string; compressedUrl: string; fileName: string }[];
+  pictures: {
+    _id: string;
+    originalUrl: string;
+    compressedUrl: string;
+    fileName: string;
+  }[];
   currentIndex: number;
   checkedPics: string[];
   onClose: () => void;
@@ -137,7 +142,11 @@ export const PictureViewer = ({
           onMouseLeave={handleDrag}
         >
           {isVideo(currentMedia.compressedUrl) ? (
-            <PictureViewerVideo src={currentMedia.compressedUrl} controls autoPlay />
+            <PictureViewerVideo
+              src={currentMedia.compressedUrl}
+              controls
+              autoPlay
+            />
           ) : (
             <PictureViewerImg
               src={currentMedia.compressedUrl}
@@ -158,16 +167,17 @@ export const PictureViewer = ({
             </PictureViewerPicIconBtn>
           )}
 
-          {albumKey === "weddingAlbum" && !isVideo(currentMedia.originalUrl) && (
-            <PictureViewerDownloadLink
-              component="a"
-              href={currentMedia.originalUrl}
-              download={currentMedia.fileName}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <DownloadIcon htmlColor="#fff" />
-            </PictureViewerDownloadLink>
-          )}
+          {(role === "Admin" || albumKey === "weddingAlbum") &&
+            !isVideo(currentMedia.originalUrl) && (
+              <PictureViewerDownloadLink
+                component="a"
+                href={currentMedia.originalUrl}
+                download={currentMedia.fileName}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DownloadIcon htmlColor="#fff" />
+              </PictureViewerDownloadLink>
+            )}
 
           {role === "Admin" && (
             <PictureViewerCheckboxBox
@@ -180,6 +190,7 @@ export const PictureViewer = ({
             </PictureViewerCheckboxBox>
           )}
         </PictureViewerUnderPicBtnsBox>
+
         {showSwipeHint && isXs && (
           <Box
             sx={{

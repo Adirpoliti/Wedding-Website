@@ -72,6 +72,8 @@ export const Album = ({
     picsFromCeremony
   );
 
+  const isAdmin = useAppSelector((state) => state.user.user?.role === "admin");
+
   const handleDelete = async (picId: string) => {
     if (!token) return;
     try {
@@ -103,6 +105,9 @@ export const Album = ({
       <GalleryContentBox>
         {albums.map(({ label, key }, index) => {
           const pics = albumPictures[key] ?? [];
+          const displayedPics =
+            key === "CeremonyPics" ? pics : pics.slice().reverse();
+
           return (
             <CustomTabPanel key={key} value={value} index={index}>
               {pics.length === 0 ? (
@@ -111,7 +116,7 @@ export const Album = ({
                 </Box>
               ) : (
                 <ImageList cols={columns} gap={8}>
-                  {pics.slice().reverse().map((pic, index) => (
+                  {displayedPics.map((pic, index) => (
                     <ImageListItemWrapper key={pic._id}>
                       <ImageListItem>
                         <FadeImage
@@ -120,30 +125,33 @@ export const Album = ({
                           onClick={() => openViewer(index)}
                         />
                       </ImageListItem>
-                      <BtnBox className="btn-box">
-                        <PictureBtns
-                          item1={
-                            <ItemBox onClick={() => onCheckboxToggle(pic._id)}>
-                              <Typography
-                                sx={{
-                                  fontSize: "1rem",
-                                  fontWeight: "bold",
-                                  color: "#fff",
-                                }}
+                      {(isAdmin || key === "weddingAlbum") && (
+                        <BtnBox className="btn-box">
+                          <PictureBtns
+                            albumKey={key}
+                            item1={
+                              <ItemBox
+                                onClick={() => onCheckboxToggle(pic._id)}
                               >
-                                בחירה
-                              </Typography>
-                              <Box
-                                sx={{ display: "flex", alignItems: "center" }}
-                              >
-                                <CheckBoxBtn
-                                  checked={checkedPics.includes(pic._id)}
-                                />
-                              </Box>
-                            </ItemBox>
-                          }
-                          item2={
-                            albums[value]?.key === "weddingAlbum" ? (
+                                <Typography
+                                  sx={{
+                                    fontSize: "1rem",
+                                    fontWeight: "bold",
+                                    color: "#fff",
+                                  }}
+                                >
+                                  בחירה
+                                </Typography>
+                                <Box
+                                  sx={{ display: "flex", alignItems: "center" }}
+                                >
+                                  <CheckBoxBtn
+                                    checked={checkedPics.includes(pic._id)}
+                                  />
+                                </Box>
+                              </ItemBox>
+                            }
+                            item2={
                               <ItemBoxA
                                 component="a"
                                 href={pic.originalUrl}
@@ -163,24 +171,27 @@ export const Album = ({
                                   fontSize="medium"
                                 />
                               </ItemBoxA>
-                            ) : undefined
-                          }
-                          item3={
-                            <ItemBox onClick={() => handleDelete(pic._id)}>
-                              <Typography
-                                sx={{
-                                  fontSize: "1rem",
-                                  fontWeight: "bold",
-                                  color: "#fff",
-                                }}
-                              >
-                                מחיקה
-                              </Typography>
-                              <DeleteIcon htmlColor="#fff" fontSize="medium" />
-                            </ItemBox>
-                          }
-                        />
-                      </BtnBox>
+                            }
+                            item3={
+                              <ItemBox onClick={() => handleDelete(pic._id)}>
+                                <Typography
+                                  sx={{
+                                    fontSize: "1rem",
+                                    fontWeight: "bold",
+                                    color: "#fff",
+                                  }}
+                                >
+                                  מחיקה
+                                </Typography>
+                                <DeleteIcon
+                                  htmlColor="#fff"
+                                  fontSize="medium"
+                                />
+                              </ItemBox>
+                            }
+                          />
+                        </BtnBox>
+                      )}
                     </ImageListItemWrapper>
                   ))}
                 </ImageList>
