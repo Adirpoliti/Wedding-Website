@@ -33,7 +33,10 @@ export const PictureBtns = ({
     setAnchorEl(null);
   };
 
-  const canShowMenu = role === "Admin" || albumKey === "weddingAlbum";
+  const isAdmin = role === "Admin";
+  const canDownload = isAdmin || albumKey === "weddingAlbum";
+  const canShowMenu = isAdmin || canDownload;
+
   if (!canShowMenu) return null;
 
   return (
@@ -58,13 +61,13 @@ export const PictureBtns = ({
           },
         }}
       >
-        {role === "Admin" && item1 && (
+        {isAdmin && item1 && (
           <MenuItem onClick={handleClose}>{item1}</MenuItem>
         )}
-        {albumKey === "weddingAlbum" && item2 && (
+        {canDownload && item2 && (
           <MenuItem onClick={handleClose}>{item2}</MenuItem>
         )}
-        {role === "Admin" && item3 && (
+        {isAdmin && item3 && (
           <MenuItem onClick={handleClose}>{item3}</MenuItem>
         )}
       </CustomMenu>
