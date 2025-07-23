@@ -54,7 +54,7 @@ export const PictureViewer = ({
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
 
-  const reversedPictures = [...pictures].reverse();
+  const reversedPictures = albumKey === "CeremonyPics" ? pictures : [...pictures].reverse();
   const currentMedia = reversedPictures[currentIndex];
 
   const isVideo = (url: string) => {
