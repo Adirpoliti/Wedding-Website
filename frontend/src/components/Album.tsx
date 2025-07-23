@@ -115,7 +115,7 @@ export const Album = ({
                     <ImageListItemWrapper key={pic._id}>
                       <ImageListItem>
                         <FadeImage
-                          src={pic.photoUrl}
+                          src={pic.compressedUrl}
                           alt={pic.fileName}
                           onClick={() => openViewer(index)}
                         />
@@ -146,7 +146,7 @@ export const Album = ({
                             albums[value]?.key === "weddingAlbum" ? (
                               <ItemBoxA
                                 component="a"
-                                href={pic.photoUrl}
+                                href={pic.originalUrl}
                                 download={pic.fileName}
                               >
                                 <Typography

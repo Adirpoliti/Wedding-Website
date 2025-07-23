@@ -22,7 +22,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface PictureViewerProps {
   albumKey: string;
-  pictures: { _id: string; photoUrl: string; fileName: string }[];
+  pictures: { _id: string; originalUrl: string; compressedUrl: string; fileName: string }[];
   currentIndex: number;
   checkedPics: string[];
   onClose: () => void;
@@ -136,11 +136,11 @@ export const PictureViewer = ({
           onMouseUp={handleDrag}
           onMouseLeave={handleDrag}
         >
-          {isVideo(currentMedia.photoUrl) ? (
-            <PictureViewerVideo src={currentMedia.photoUrl} controls autoPlay />
+          {isVideo(currentMedia.compressedUrl) ? (
+            <PictureViewerVideo src={currentMedia.compressedUrl} controls autoPlay />
           ) : (
             <PictureViewerImg
-              src={currentMedia.photoUrl}
+              src={currentMedia.compressedUrl}
               alt={currentMedia.fileName}
             />
           )}
@@ -158,10 +158,10 @@ export const PictureViewer = ({
             </PictureViewerPicIconBtn>
           )}
 
-          {albumKey === "weddingAlbum" && !isVideo(currentMedia.photoUrl) && (
+          {albumKey === "weddingAlbum" && !isVideo(currentMedia.compressedUrl) && (
             <PictureViewerDownloadLink
               component="a"
-              href={currentMedia.photoUrl}
+              href={currentMedia.compressedUrl}
               download={currentMedia.fileName}
               onClick={(e) => e.stopPropagation()}
             >
