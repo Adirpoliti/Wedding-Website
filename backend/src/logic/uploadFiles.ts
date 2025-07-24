@@ -51,6 +51,7 @@ export const uploadFiles = async (file: UploadedFile, path: string) => {
       const compressedKey = `${path}/${baseName}_compressed.webp`;
 
       const compressedBuffer = await sharp(file.data)
+        .rotate()
         .resize({ width: 1280 })
         .webp({ quality: 75 })
         .toBuffer();
