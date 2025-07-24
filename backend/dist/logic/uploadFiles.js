@@ -10,6 +10,7 @@ const logger_1 = require("../utils/logger");
 const sharp_1 = __importDefault(require("sharp"));
 const node_http_handler_1 = require("@smithy/node-http-handler");
 const https_1 = require("https");
+const exif = require("exif-parser");
 const s3 = new client_s3_1.S3Client({
     region: process.env.AWS_REGION,
     credentials: {
@@ -42,8 +43,36 @@ const uploadFiles = async (file, path) => {
             original: { key: originalKey, url: `${baseUrl}/${originalKey}` },
         };
         if (file.mimetype.startsWith("image/")) {
+            // 📷 STEP 1: Check EXIF orientation
+            let orientation;
+            try {
+                const parser = exif.create(file.data);
+                const parsed = parser.parse();
+                orientation = parsed.tags.Orientation;
+                console.log("📷 EXIF Orientation:", orientation);
+            }
+            catch (err) {
+                console.log("❌ Failed to parse EXIF:", err);
+            }
+            // 📦 STEP 2: Decide how to rotate using EXIF
+            let sharpInstance = (0, sharp_1.default)(file.data);
+            switch (orientation) {
+                case 3:
+                    sharpInstance = sharpInstance.rotate(180);
+                    break;
+                case 6:
+                    sharpInstance = sharpInstance.rotate(90);
+                    break;
+                case 8:
+                    sharpInstance = sharpInstance.rotate(270);
+                    break;
+                default:
+                    sharpInstance = sharpInstance.rotate(); // fallback to Sharp's default
+                    break;
+            }
+            // 📦 STEP 3: Resize and compress
             const compressedKey = `${path}/${baseName}_compressed.webp`;
-            const compressedBuffer = await (0, sharp_1.default)(file.data)
+            const compressedBuffer = await sharpInstance
                 .resize({ width: 1280 })
                 .webp({ quality: 75 })
                 .toBuffer();
